@@ -93,17 +93,22 @@ async function bootstrap() {
     await initDatabase();
     app.listen(config.port, () => {
       console.log(`=======================================================`);
-      console.log(`?? GS Vision Server running on http://localhost:${config.port}`);
-      console.log(`?? Environment: ${config.nodeEnv}`);
+      console.log(`GS Vision Server running on http://localhost:${config.port}`);
+      console.log(`Environment: ${config.nodeEnv}`);
       console.log(`=======================================================`);
     });
   } catch (error) {
     console.error('Failed to start server:', error.message);
-    // Even if MySQL isn't running right this second, listen so server starts
     app.listen(config.port, () => {
-      console.log(`?? GS Vision Server running with DB offline on port ${config.port}`);
+      console.log(`GS Vision Server running with DB offline on port ${config.port}`);
     });
   }
 }
 
-bootstrap();
+if (require.main === module) {
+  bootstrap();
+} else {
+  initDatabase().catch(err => console.error(err));
+}
+
+module.exports = app;
