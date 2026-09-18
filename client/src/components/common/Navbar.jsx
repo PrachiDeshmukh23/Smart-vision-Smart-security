@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { ShieldCheck, Search, Phone, Mail, Menu, X, MessageSquare } from 'lucide-react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { 
+  ShieldCheck, Menu, X, Phone, Mail, Search, MessageSquare, 
+  FileSpreadsheet, Sparkles, Tag, Truck
+} from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 
 export default function Navbar({ onOpenEnquire }) {
   const { settings } = useSettings();
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    setIsOpen(false);
-    setSearchOpen(false);
-  }, [location]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -36,6 +35,7 @@ export default function Navbar({ onOpenEnquire }) {
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
     { name: 'Products', path: '/products' },
+    { name: 'Price List', path: '/price-list', badge: 'Wholesale' },
     { name: 'Solutions', path: '/solutions' },
     { name: 'Offers', path: '/offers', badge: 'Hot' },
     { name: 'Dealers', path: '/dealer' },
@@ -46,34 +46,36 @@ export default function Navbar({ onOpenEnquire }) {
 
   return (
     <>
-      <div className="bg-[#07101E] border-b border-slate-800/80 text-xs text-slate-400 py-1.5 px-4 hidden md:block">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <span className="flex items-center gap-1.5 text-slate-300">
-              <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Smart Vision.. Smart Security</span>
+      {/* CCTVPRO-style Top Wholesale Announcement Notice */}
+      <div className="bg-gradient-to-r from-blue-950 via-slate-900 to-cyan-950 border-b border-cyan-500/20 text-[11px] text-slate-300 py-1.5 px-4 font-medium">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2 truncate">
+            <span className="bg-amber-400 text-slate-950 text-[9px] font-black px-1.5 py-0.5 rounded shrink-0">
+              WHOLESALE NOTICE
             </span>
-            <a href={`tel:${settings?.phone || '+919876543210'}`} className="flex items-center gap-1 hover:text-cyan-400 transition-colors">
-              <Phone className="w-3 h-3 text-cyan-400" />
-              <span>{settings?.phone || '+91 98765 43210'}</span>
-            </a>
-            <a href={`mailto:${settings?.email || 'sales@gsvision.com'}`} className="flex items-center gap-1 hover:text-cyan-400 transition-colors">
-              <Mail className="w-3 h-3 text-cyan-400" />
-              <span>{settings?.email || 'sales@gsvision.com'}</span>
-            </a>
+            <span className="truncate">
+              All Prices Excl. GST • <strong>200+ CCTV Accessories with NO MOQ</strong> • COD Available with token advance • Courier & Payment on WhatsApp/Call
+            </span>
           </div>
-          <div className="flex items-center gap-4">
-            <Link to="/dealer" className="hover:text-amber-400 transition-colors font-medium text-amber-300/90">
-              Become a Dealer
-            </Link>
+          <div className="hidden sm:flex items-center gap-4 shrink-0 text-xs">
+            <a 
+              href={`https://wa.me/${(settings?.whatsapp_number || '919876543210').replace(/[^0-9]/g, '')}?text=Hello%20send%20me%20wholesale%20price%20list`} 
+              target="_blank" 
+              rel="noreferrer"
+              className="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1"
+            >
+              <Truck className="w-3.5 h-3.5" />
+              <span>Pan-India Dispatch</span>
+            </a>
             <span className="text-slate-700">|</span>
-            <Link to="/admin/login" className="hover:text-cyan-400 transition-colors">
+            <Link to="/admin/login" className="text-slate-400 hover:text-cyan-400 transition-colors">
               Admin Login
             </Link>
           </div>
         </div>
       </div>
 
+      {/* Main Brand Header */}
       <header
         className={`sticky top-0 z-40 transition-all duration-300 ${
           scrolled ? 'bg-[#0B192C]/95 backdrop-blur-md shadow-xl border-b border-slate-800/80 py-3' : 'bg-[#0B192C] border-b border-slate-800/50 py-4'
@@ -101,14 +103,16 @@ export default function Navbar({ onOpenEnquire }) {
                 key={link.name}
                 to={link.path}
                 className={({ isActive }) =>
-                  `px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative ${
-                    isActive ? 'text-cyan-400 bg-cyan-500/10 font-semibold' : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                  `px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 relative ${
+                    isActive ? 'text-cyan-400 bg-cyan-500/10 font-bold' : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                   }`
                 }
               >
                 {link.name}
                 {link.badge && (
-                  <span className="absolute -top-1 -right-1 bg-gradient-to-r from-orange-500 to-amber-500 text-[10px] text-white font-bold px-1.5 py-0.2 rounded-full uppercase scale-90 animate-pulse">
+                  <span className={`absolute -top-1 -right-1 text-[9px] text-slate-950 font-black px-1.5 py-0.2 rounded-full uppercase scale-90 ${
+                    link.badge === 'Wholesale' ? 'bg-amber-400' : 'bg-orange-500 text-white animate-pulse'
+                  }`}>
                     {link.badge}
                   </span>
                 )}
@@ -126,7 +130,7 @@ export default function Navbar({ onOpenEnquire }) {
             </button>
             <button
               onClick={() => onOpenEnquire && onOpenEnquire()}
-              className="px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 transition-all shadow-lg shadow-cyan-500/20 active:scale-95 flex items-center gap-2"
+              className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 transition-all shadow-lg shadow-cyan-500/20 active:scale-95 flex items-center gap-2"
             >
               <MessageSquare className="w-4 h-4" />
               <span>Enquire Now</span>
@@ -156,7 +160,7 @@ export default function Navbar({ onOpenEnquire }) {
                 <Search className="absolute left-4 w-5 h-5 text-slate-400" />
                 <input
                   type="text"
-                  placeholder="Search cameras, power supplies, PoE switches, CAT6 cables..."
+                  placeholder="Search cameras, connectors, SMPS, junction boxes, CAT6, racks, tools..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   autoFocus
@@ -179,15 +183,18 @@ export default function Navbar({ onOpenEnquire }) {
               <NavLink
                 key={link.name}
                 to={link.path}
+                onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                    isActive ? 'text-cyan-400 bg-cyan-500/10 font-semibold' : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                    isActive ? 'text-cyan-400 bg-cyan-500/10 font-bold' : 'text-slate-300 hover:text-white hover:bg-slate-800'
                   }`
                 }
               >
                 <span>{link.name}</span>
                 {link.badge && (
-                  <span className="bg-orange-500 text-[10px] text-white font-bold px-2 py-0.5 rounded-full uppercase">
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
+                    link.badge === 'Wholesale' ? 'bg-amber-400 text-slate-950' : 'bg-orange-500 text-white'
+                  }`}>
                     {link.badge}
                   </span>
                 )}

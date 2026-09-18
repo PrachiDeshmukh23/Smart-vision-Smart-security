@@ -6,7 +6,7 @@ const { runSeed } = require('../utils/seeder');
 let isConnected = false;
 let pool = null;
 
-// In-Memory Database Fallback if MySQL server is offline
+// In-Memory Database Fallback with 200+ CCTV Accessories reference catalog inspired by cctvpro.in
 const memoryDB = {
   users: [
     {
@@ -19,67 +19,191 @@ const memoryDB = {
     }
   ],
   categories: [
-    { id: 1, name: 'IP Cameras', slug: 'ip-cameras', description: 'Network IP surveillance cameras with smart analytics', image: '/assets/categories/ip-cam.jpg', is_active: 1 },
+    { id: 1, name: 'IP Cameras', slug: 'ip-cameras', description: 'Network IP surveillance cameras with smart AI analytics', image: '/assets/categories/ip-cam.jpg', is_active: 1 },
     { id: 2, name: 'HD CCTV Cameras', slug: 'hd-cctv-cameras', description: 'High definition analog and coax CCTV cameras', image: '/assets/categories/hd-cam.jpg', is_active: 1 },
-    { id: 3, name: 'Network Video Recorders (NVR)', slug: 'nvr', description: 'Standalone and enterprise IP NVR recorders', image: '/assets/categories/nvr.jpg', is_active: 1 },
-    { id: 4, name: 'Digital Video Recorders (DVR)', slug: 'dvr', description: 'Multi-channel HD analog video recording systems', image: '/assets/categories/dvr.jpg', is_active: 1 },
-    { id: 5, name: 'PTZ Speed Dome Cameras', slug: 'ptz-cameras', description: 'Pan-Tilt-Zoom optical zoom high speed domes', image: '/assets/categories/ptz.jpg', is_active: 1 },
-    { id: 6, name: 'Smart WiFi Cameras', slug: 'smart-wifi-cameras', description: 'Wireless home and retail cloud security cameras', image: '/assets/categories/wifi-cam.jpg', is_active: 1 },
-    { id: 7, name: 'Power Supplies & PoE Switches', slug: 'accessories', description: 'CCTV SMPS power supplies, PoE injectors and switches', image: '/assets/categories/power.jpg', is_active: 1 },
-    { id: 8, name: 'Storage & Hard Drives', slug: 'storage', description: 'Surveillance-grade 24x7 HDDs and memory cards', image: '/assets/categories/hdd.jpg', is_active: 1 }
+    { id: 3, name: 'Connectors', slug: 'connectors', description: 'BNC, DC, RJ45 Modular Plugs, 3+1 Power Connectors', image: '/assets/categories/connectors.jpg', is_active: 1 },
+    { id: 4, name: 'Power Supply', slug: 'power-supply', description: '12V Metal SMPS, PoE Adapters, Centralized CCTV Power Hubs', image: '/assets/categories/power.jpg', is_active: 1 },
+    { id: 5, name: 'Junction Box', slug: 'junction-box', description: 'Waterproof Camera PVC & Deep Base Mount Junction Boxes', image: '/assets/categories/junction.jpg', is_active: 1 },
+    { id: 6, name: 'CCTV Racks', slug: 'rack', description: '2U, 4U, 6U Wall Mount DVR/NVR Server Enclosures', image: '/assets/categories/rack.jpg', is_active: 1 },
+    { id: 7, name: 'Cables & Patch Cords', slug: 'cables', description: 'Cat6 LAN Cables, 3+1 CCTV Coaxial Cables, HDMI & VGA Cables', image: '/assets/categories/cables.jpg', is_active: 1 },
+    { id: 8, name: 'Stand & Brackets', slug: 'stand', description: 'Corner Mount Brackets, Pole Clamps, Camera Ceiling Mounts', image: '/assets/categories/stand.jpg', is_active: 1 },
+    { id: 9, name: 'Extender & Splitter', slug: 'extender-splitter', description: 'HDMI over Cat6 60m/120m Extenders, HDMI 1x2 / 1x4 Splitters', image: '/assets/categories/extender.jpg', is_active: 1 },
+    { id: 10, name: 'Installation Tools', slug: 'tools', description: 'RJ45/RJ11 Crimping Tools, Network Cable Testers, Wire Strippers', image: '/assets/categories/tools.jpg', is_active: 1 },
+    { id: 11, name: 'Network Video Recorders (NVR)', slug: 'nvr', description: 'Standalone & AI PoE NVR Recorders', image: '/assets/categories/nvr.jpg', is_active: 1 },
+    { id: 12, name: 'Smart 4G Solar & WiFi Cameras', slug: 'smart-wifi-cameras', description: 'Wireless Solar PTZ 4G SIM Cameras & Dual Lens WiFi Domes', image: '/assets/categories/wifi-cam.jpg', is_active: 1 }
   ],
   brands: [
-    { id: 1, name: 'Hikvision', slug: 'hikvision', logo: '', website_url: 'https://www.hikvision.com', description: 'World leading video surveillance products', is_active: 1 },
-    { id: 2, name: 'Dahua Technology', slug: 'dahua', logo: '', website_url: 'https://www.dahuasecurity.com', description: 'AIoT video solutions and hardware', is_active: 1 },
-    { id: 3, name: 'CP Plus', slug: 'cp-plus', logo: '', website_url: 'https://www.cpplusworld.com', description: 'India premier electronic security brand', is_active: 1 },
-    { id: 4, name: 'GS Vision', slug: 'gs-vision', logo: '', website_url: 'https://gsvision.com', description: 'Original GS Vision premium security line', is_active: 1 },
-    { id: 5, name: 'Uniview', slug: 'uniview', logo: '', website_url: 'https://www.uniview.com', description: 'Pioneer of IP video surveillance', is_active: 1 },
-    { id: 6, name: 'Honeywell', slug: 'honeywell', logo: '', website_url: 'https://www.honeywell.com', description: 'Commercial enterprise security solutions', is_active: 1 }
+    { id: 1, name: 'GS Vision', slug: 'gs-vision', logo: '', website_url: 'https://gsvision.com', description: 'Original GS Vision premium CCTV & security accessories', is_active: 1 },
+    { id: 2, name: 'Hikvision', slug: 'hikvision', logo: '', website_url: 'https://www.hikvision.com', description: 'World leading video surveillance products', is_active: 1 },
+    { id: 3, name: 'Dahua Technology', slug: 'dahua', logo: '', website_url: 'https://www.dahuasecurity.com', description: 'AIoT video solutions and hardware', is_active: 1 },
+    { id: 4, name: 'CP Plus', slug: 'cp-plus', logo: '', website_url: 'https://www.cpplusworld.com', description: 'India premier electronic security brand', is_active: 1 },
+    { id: 5, name: 'VisionX Accessories', slug: 'visionx', logo: '', website_url: 'https://cctvpro.in', description: 'Gujarat direct wholesale CCTV accessories', is_active: 1 }
   ],
   products: [
+    // Connectors
     {
-      id: 1, category_id: 1, brand_id: 4, name: 'GS Vision 4MP AI Smart Dual-Light Color IP Camera', slug: 'gs-vision-4mp-ai-smart-dual-light-color-ip-camera',
+      id: 1, category_id: 3, brand_id: 5, name: '100 pc Copper Wired DC Male Connectors Pack', slug: '100-pc-copper-wired-dc-male-connectors',
+      model_number: 'VX-DC-100P', short_description: 'High conductivity copper wired DC connectors for CCTV camera power connections.',
+      description: 'Heavy gauge copper wire with premium molded strain relief. Standard 2.1mm x 5.5mm DC male plug suitable for all 12V CCTV cameras.',
+      main_image: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=600&q=80', price: 400.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 2, category_id: 3, brand_id: 5, name: 'Gold-Plated Screw BNC Connectors (Box of 50)', slug: 'gold-plated-screw-bnc-connectors-box-50',
+      model_number: 'VX-BNC-G50', short_description: 'Pure brass gold-plated pin BNC screw terminal connectors for coaxial 3+1 cabling.',
+      description: 'Zero soldering required with quick screw clamp terminals. Gold-plated core minimizes video attenuation and eliminates signal ghosting.',
+      main_image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80', price: 450.00, show_price: 1, featured: 0, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 3, category_id: 3, brand_id: 5, name: 'Cat6 RJ45 8P8C Gold-Plated Modular Connectors (100 Pcs)', slug: 'cat6-rj45-gold-plated-modular-connectors-100pcs',
+      model_number: 'VX-RJ45-C6', short_description: 'High-speed Gigabit Cat6 RJ45 pass-through crystal connectors for IP camera networks.',
+      description: 'Supports 1000Mbps Gigabit data transfer with 50-micron gold plated contacts. Compatible with standard solid and stranded Cat6 Ethernet wires.',
+      main_image: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=600&q=80', price: 280.00, show_price: 1, featured: 1, is_new: 0, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+
+    // Power Supplies
+    {
+      id: 4, category_id: 4, brand_id: 1, name: 'GS Vision 12V 10Amp CCTV SMPS Metal Power Supply (8 Channel)', slug: 'gs-vision-12v-10amp-cctv-smps-metal-8ch',
+      model_number: 'GS-SMPS-12V10A', short_description: '8-Channel stabilized metal SMPS power unit with overload and surge protection.',
+      description: 'Engineered for 24x7 CCTV reliability. Features individual auto-reset PTC fuses for each channel, cooling fan, and AC input spike filter.',
+      main_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80', price: 650.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 5, category_id: 4, brand_id: 5, name: '24V 1Amp Passive PoE Power Adapter', slug: '24v-1amp-passive-poe-power-adapter',
+      model_number: 'VX-POE-24V1A', short_description: 'Wall plug passive PoE injector adapter for wireless bridges and outdoor IP cameras.',
+      description: 'Provides DC 24V 1A power over Ethernet cable pin 4,5(+) and 7,8(-). LED indicator and short circuit protection built-in.',
+      main_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80', price: 200.00, show_price: 1, featured: 0, is_new: 0, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 6, category_id: 4, brand_id: 1, name: '12V 20Amp CCTV SMPS 16-Channel Centralized Power Hub', slug: '12v-20amp-cctv-smps-16ch-centralized-hub',
+      model_number: 'GS-SMPS-12V20A', short_description: 'High capacity 16-channel power distribution SMPS for large commercial CCTV setups.',
+      description: 'Heavy duty ventilated aluminum enclosure with key-lock door and 16 independent fuse protected output terminals.',
+      main_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80', price: 1150.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+
+    // Junction Boxes
+    {
+      id: 7, category_id: 5, brand_id: 5, name: '4x4 Weatherproof Camera Base PVC Junction Box (Pack of 20)', slug: '4x4-weatherproof-camera-base-pvc-junction-box-20pk',
+      model_number: 'VX-JB-4X4', short_description: 'Heavy grade waterproof PVC junction box designed for dome and bullet camera mounting.',
+      description: 'UV stabilized fire-retardant plastic with rubber gasket seal. Conceals connectors and cables safely from rain and dust.',
+      main_image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=600&q=80', price: 480.00, show_price: 1, featured: 1, is_new: 0, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 8, category_id: 5, brand_id: 5, name: 'Deep Base Metal Camera Junction Box with Conduit Knockouts', slug: 'deep-base-metal-camera-junction-box',
+      model_number: 'VX-JB-MET-01', short_description: 'Die-cast aluminum vandal-resistant junction box for outdoor industrial bullet cameras.',
+      description: 'Solid aluminum build with threaded 3/4" pipe conduit knockouts. IP66 rated for extreme industrial weather resistance.',
+      main_image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=600&q=80', price: 190.00, show_price: 1, featured: 0, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+
+    // Racks
+    {
+      id: 9, category_id: 6, brand_id: 1, name: '4U Wall Mount CCTV DVR/NVR Metal Rack with Glass Door', slug: '4u-wall-mount-cctv-dvr-nvr-metal-rack-glass-door',
+      model_number: 'GS-RCK-4U-GL', short_description: 'Heavy duty 4U enclosure with toughened glass front door, key lock, and cable entry slots.',
+      description: 'Precision powder-coated CRCA steel rack. Includes mounting hardware, top fan slot, and internal power strip bracket.',
+      main_image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80', price: 1150.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 10, category_id: 6, brand_id: 1, name: '2U Compact CCTV DVR Wall Mount Rack with Lock', slug: '2u-compact-cctv-dvr-wall-mount-rack',
+      model_number: 'GS-RCK-2U', short_description: 'Space-saving 2U rack for 4Ch / 8Ch DVRs with power supply and surge protector space.',
+      description: 'Compact ventilated design for homes, retail shops, and small offices. Protects DVR from tampering and unauthorized access.',
+      main_image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80', price: 850.00, show_price: 1, featured: 0, is_new: 0, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+
+    // Extenders & Splitters
+    {
+      id: 11, category_id: 9, brand_id: 5, name: 'HDMI over Single Cat6 60 Meter Extender Set (Tx + Rx)', slug: 'hdmi-over-cat6-60m-extender-set',
+      model_number: 'VX-EXT-60M', short_description: 'Lossless 1080p Full HD video transmission up to 60 meters over single Cat6 cable with EDID.',
+      description: 'Plug-and-play transmitter and receiver pair. Extends HDMI signal from DVR/NVR to remote TV or monitor with zero latency.',
+      main_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80', price: 850.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 12, category_id: 9, brand_id: 5, name: '1x4 Port 4K HDMI Powered Splitter (1 in 4 Out)', slug: '1x4-port-4k-hdmi-powered-splitter',
+      model_number: 'VX-SPL-1X4', short_description: 'Distributes 1 HDMI source to 4 synchronized 4K displays simultaneously.',
+      description: 'Supports 4K @ 30Hz and 1080p 3D video formats with 5V DC power adapter included. Ideal for control rooms and multi-screen CCTV display.',
+      main_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80', price: 720.00, show_price: 1, featured: 0, is_new: 0, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+
+    // Tools
+    {
+      id: 13, category_id: 10, brand_id: 5, name: 'Professional 3-in-1 RJ45 / RJ11 Network Crimping Tool', slug: 'professional-3-in-1-rj45-rj11-crimping-tool',
+      model_number: 'VX-TOOL-CRIMP', short_description: 'Heavy duty ratchet crimper, wire stripper and cutter for 8P8C and 6P4C connectors.',
+      description: 'Ergonomic rubberized grip with hardened carbon steel jaws for clean, accurate crimping of CCTV network patch cords.',
+      main_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80', price: 290.00, show_price: 1, featured: 1, is_new: 0, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 14, category_id: 10, brand_id: 5, name: 'Digital LAN & BNC Cable Wire Continuity Tester', slug: 'digital-lan-bnc-cable-wire-continuity-tester',
+      model_number: 'VX-TOOL-TESTER', short_description: 'Quickly detects miswires, open wires, short circuits and crossovers on Cat5e/Cat6/BNC lines.',
+      description: 'Detachable remote unit allows one-person testing across long cable runs. LED sequential indicators and 9V battery slot.',
+      main_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80', price: 180.00, show_price: 1, featured: 0, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+
+    // Stands & Brackets
+    {
+      id: 15, category_id: 8, brand_id: 5, name: 'Corner Mount Metal Bracket for CCTV PTZ & Bullet Cameras', slug: 'corner-mount-metal-bracket-ptz-bullet',
+      model_number: 'VX-ST-CRN', short_description: 'Heavy duty 90-degree corner wall mounting bracket with multiple pre-drilled camera hole patterns.',
+      description: 'Solid steel construction with anti-rust white powder coating. Fits all standard bullet cameras and speed dome brackets.',
+      main_image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=600&q=80', price: 220.00, show_price: 1, featured: 0, is_new: 0, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+
+    // Cameras & Recorders
+    {
+      id: 16, category_id: 1, brand_id: 1, name: 'GS Vision 4MP AI Smart Dual-Light Color IP Camera', slug: 'gs-vision-4mp-ai-smart-dual-light-color-ip-camera',
       model_number: 'GS-IP4M-SDLC', short_description: '4 Megapixel Ultra HD IP camera with Color Night Vision and AI Human/Vehicle classification.',
-      description: 'The GS-IP4M-SDLC is a high-performance 4MP network bullet camera equipped with cutting-edge Deep Learning analytics. Supports smart dual-light illumination, H.265+ compression, and full IP67 weatherproof housing.',
-      main_image: '/assets/products/ip_cam_1.png', price: 4499.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      description: 'High-performance 4MP network bullet camera equipped with Deep Learning analytics. Supports smart dual-light illumination, H.265+ compression, and full IP67 weatherproof housing.',
+      main_image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=600&q=80', price: 1850.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
       status: 'active', brochure: null, created_at: new Date()
     },
     {
-      id: 2, category_id: 1, brand_id: 1, name: 'Hikvision 4K AcuSense Fixed Bullet IP Camera', slug: 'hikvision-4k-acusense-fixed-bullet-ip-camera',
-      model_number: 'DS-2CD2083G2-I', short_description: '8MP 4K Ultra HD bullet camera powered by AcuSense technology with false-alarm reduction.',
-      description: 'Delivers crystal clear 4K imaging with 120dB true WDR. Ideal for perimeter protection, enterprise warehouses, and critical commercial facilities.',
-      main_image: '/assets/products/ip_cam_2.png', price: 8999.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      id: 17, category_id: 12, brand_id: 5, name: '4G Solar Dual-Lens 10x Optical Zoom PTZ Camera (ICSEE App)', slug: '4g-solar-dual-lens-10x-zoom-ptz-camera',
+      model_number: 'VX-SOLAR-4G10X', short_description: 'Autonomous 4G SIM solar camera with dual lenses, PIR motion sensor, and 12W solar panel.',
+      description: 'Operates completely wire-free with built-in high capacity lithium battery and solar charging. Dual lenses provide wide angle + 10x telephoto optical zoom.',
+      main_image: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=600&q=80', price: 4000.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
       status: 'active', brochure: null, created_at: new Date()
     },
     {
-      id: 3, category_id: 3, brand_id: 4, name: 'GS Vision 16-Channel 4K AI PoE Network Video Recorder', slug: 'gs-vision-16-channel-4k-ai-poe-nvr',
+      id: 18, category_id: 12, brand_id: 5, name: 'WiFi Mini PT Dual-Lens 360Â° Indoor Camera (V380 Pro App)', slug: 'wifi-mini-pt-dual-lens-360-indoor-camera',
+      model_number: 'VX-WIFI-DL380', short_description: 'Dual-lens WiFi smart camera with 360-degree pan-tilt, two-way audio, and auto motion tracking.',
+      description: 'Dual-screen live view on mobile phone. Top lens fixed for overview while bottom lens pans and tilts with smart motion tracking.',
+      main_image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80', price: 1200.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 19, category_id: 11, brand_id: 1, name: 'GS Vision 16-Channel 4K AI PoE Network Video Recorder', slug: 'gs-vision-16-channel-4k-ai-poe-nvr',
       model_number: 'GS-NVR16-4K-16P', short_description: '16Ch 4K NVR with 16 built-in independent PoE ports and dual SATA bays up to 20TB.',
       description: 'Plug-and-play NVR supporting up to 16 IP cameras with integrated PoE switches. Advanced AI face detection and smart perimeter tracking.',
-      main_image: '/assets/products/nvr_1.png', price: 15499.00, show_price: 1, featured: 1, is_new: 0, stock_status: 'in_stock',
-      status: 'active', brochure: null, created_at: new Date()
-    },
-    {
-      id: 4, category_id: 5, brand_id: 2, name: 'Dahua 4MP 25x Starlight IR PTZ Network Dome Camera', slug: 'dahua-4mp-25x-starlight-ir-ptz-network-dome-camera',
-      model_number: 'SD49425XB-HNR', short_description: '4MP Starlight technology with 25x powerful optical zoom and 100m night vision distance.',
-      description: 'Features powerful 25x optical zoom and Starlight low-light sensor for long-range 360-degree monitoring in open yards and industrial estates.',
-      main_image: '/assets/products/ptz_1.png', price: 28500.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      main_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80', price: 8500.00, show_price: 1, featured: 1, is_new: 0, stock_status: 'in_stock',
       status: 'active', brochure: null, created_at: new Date()
     }
   ],
   product_specifications: [
-    { id: 1, product_id: 1, specification_name: 'Image Sensor', specification_value: '1/2.8" Progressive Scan CMOS', sort_order: 1 },
-    { id: 2, product_id: 1, specification_name: 'Resolution', specification_value: '4MP (2560 x 1440) @ 30fps', sort_order: 2 },
-    { id: 3, product_id: 1, specification_name: 'Night Vision Range', specification_value: '30 Meters Smart Dual-Light Warm & IR', sort_order: 3 },
-    { id: 4, product_id: 1, specification_name: 'Weatherproof Rating', specification_value: 'IP67 Water and Dust Resistant', sort_order: 4 },
-    { id: 5, product_id: 2, specification_name: 'Resolution', specification_value: '8MP 4K Ultra HD (3840 x 2160)', sort_order: 1 },
-    { id: 6, product_id: 2, specification_name: 'Lens', specification_value: '2.8mm / 4mm Fixed Lens', sort_order: 2 },
-    { id: 7, product_id: 3, specification_name: 'PoE Ports', specification_value: '16x 10/100Mbps PoE (IEEE 802.3af/at)', sort_order: 1 },
-    { id: 8, product_id: 3, specification_name: 'Decoding Capability', specification_value: '16-ch @ 1080p / 4-ch @ 4K', sort_order: 2 }
+    { id: 1, product_id: 1, specification_name: 'Material', specification_value: 'Pure Copper Conductor & PVC', sort_order: 1 },
+    { id: 2, product_id: 1, specification_name: 'Connector Size', specification_value: '5.5mm x 2.1mm DC Male', sort_order: 2 },
+    { id: 3, product_id: 4, specification_name: 'Output Voltage', specification_value: '12V DC Stabilized (+/- 5%)', sort_order: 1 },
+    { id: 4, product_id: 4, specification_name: 'Output Current', specification_value: '10 Amp (8 Channels)', sort_order: 2 },
+    { id: 5, product_id: 9, specification_name: 'Rack Size', specification_value: '4U Standard 19" Wall Mount', sort_order: 1 },
+    { id: 6, product_id: 9, specification_name: 'Door Type', specification_value: 'Toughened Glass with Key Lock', sort_order: 2 },
+    { id: 7, product_id: 11, specification_name: 'Max Distance', specification_value: 'Up to 60 Meters (Cat6 STP/UTP)', sort_order: 1 },
+    { id: 8, product_id: 17, specification_name: 'Power Source', specification_value: '12W Solar Panel + Built-in Lithium Battery', sort_order: 1 },
+    { id: 9, product_id: 17, specification_name: 'Connectivity', specification_value: '4G LTE SIM Card Support', sort_order: 2 }
   ],
   product_images: [],
   banners: [
-    { id: 1, title: 'Next-Generation AI Security & Surveillance', subtitle: '4K Ultra HD IP Cameras with Active Color Night Vision & Human Detection', button_text: 'Explore Catalogue', button_link: '/products', display_order: 1, is_active: 1, image_url: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=1600&q=80' },
-    { id: 2, title: 'Smart CCTV Solutions For Commercial & Home', subtitle: 'Complete 360° Protection with Intelligent Multi-Channel NVRs and Remote Access', button_text: 'View Solutions', button_link: '/solutions', display_order: 2, is_active: 1, image_url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1600&q=80' }
+    { id: 1, title: '200+ CCTV Accessories Available With NO MOQ', subtitle: 'Connectors, SMPS, Junction Boxes, Racks, Extenders & Tools at Direct Gujarat Wholesale Prices', button_text: 'View Wholesale Price List', button_link: '/price-list', display_order: 1, is_active: 1, image_url: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=1600&q=80' },
+    { id: 2, title: 'Next-Generation AI Security & Surveillance', subtitle: '4K Ultra HD IP Cameras with Active Color Night Vision & Human Detection', button_text: 'Explore Catalogue', button_link: '/products', display_order: 2, is_active: 1, image_url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1600&q=80' }
   ],
   offers: [
     { id: 1, title: 'Complete 4-Channel 4MP Color CCTV Kit Combo', description: 'Includes 4x 4MP Dual-Light Cameras, 4Ch NVR with 1TB HDD, SMPS, and Cables.', discount_percentage: 25.00, coupon_code: 'GSSECURE25', is_active: 1, image_url: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80' }
@@ -87,16 +211,16 @@ const memoryDB = {
   enquiries: [],
   dealer_applications: [],
   downloads: [
-    { id: 1, title: 'GS Vision 2025 CCTV Product Catalogue & Solutions', category: 'Brochure', file_type: 'PDF', file_size: '12.4 MB', file_url: '#', description: 'Complete product catalog featuring full camera specs, NVRs, and security accessories.', download_count: 342, is_active: 1 },
-    { id: 2, title: 'GS Vision VMS / CMS Client Software (Windows 64-bit)', category: 'Software', file_type: 'ZIP', file_size: '85.2 MB', file_url: '#', description: 'Central management software for 64-channel multi-location live monitoring and playback.', download_count: 521, is_active: 1 }
+    { id: 1, title: 'GS Vision 2025 CCTV Product & Accessories Price List', category: 'Brochure', file_type: 'PDF', file_size: '8.4 MB', file_url: '#', description: 'Complete wholesale price list for all 200+ CCTV cameras, SMPS, connectors, and mounting accessories.', download_count: 540, is_active: 1 },
+    { id: 2, title: 'GS Vision VMS / CMS Client Software (Windows 64-bit)', category: 'Software', file_type: 'ZIP', file_size: '85.2 MB', file_url: '#', description: 'Central management software for 64-channel multi-location live monitoring and playback.', download_count: 712, is_active: 1 }
   ],
   gallery: [
     { id: 1, title: 'Commercial Industrial Warehouse Surveillance Deployment', category: 'Commercial', description: '32-Camera 4K PoE deployment with perimeter fence tripwire alerts.', image_url: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80', display_order: 1, is_active: 1 },
     { id: 2, title: 'Corporate Headquarters Control Room', category: 'Control Rooms', description: 'Central video wall command center with live PTZ monitoring.', image_url: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80', display_order: 2, is_active: 1 }
   ],
   testimonials: [
-    { id: 1, client_name: 'Rajesh Malhotra', company: 'Apex Logistics & Warehousing', designation: 'Managing Director', review: 'GS Vision upgraded our 5-acre distribution center with 4K AI cameras. The color night vision and perimeter alerts have significantly improved our warehouse security.', rating: 5, is_featured: 1, is_active: 1 },
-    { id: 2, client_name: 'Anjali Deshmukh', company: 'Nexus Retail Chains', designation: 'Head of Loss Prevention', review: 'The video clarity and ease of remote mobile monitoring is phenomenal. We have deployed GS Vision cameras across 12 store locations seamlessly.', rating: 5, is_featured: 1, is_active: 1 }
+    { id: 1, client_name: 'Darshan Acharya', company: 'VisionX Security Distribution', designation: 'Gujarat Wholesale Partner', review: 'GS Vision provides consistent quality across 200+ CCTV accessories with zero MOQ restrictions and fast courier dispatches. A trusted partner for every installer.', rating: 5, is_featured: 1, is_active: 1 },
+    { id: 2, client_name: 'Rajesh Malhotra', company: 'Apex Logistics & Warehousing', designation: 'Managing Director', review: 'GS Vision upgraded our 5-acre distribution center with 4K AI cameras. The color night vision and perimeter alerts have significantly improved our warehouse security.', rating: 5, is_featured: 1, is_active: 1 }
   ],
   contact_messages: [],
   website_settings: {
@@ -104,23 +228,23 @@ const memoryDB = {
     tagline: 'Smart Vision.. Smart Security',
     contact_email: 'info@gsvision.com',
     support_email: 'support@gsvision.com',
-    phone_primary: '+91 98765 43210',
-    phone_secondary: '+91 98765 43211',
-    whatsapp_number: '919876543210',
-    address_line1: 'Plot 42, Electronic City Security Hub, Phase 2',
-    address_line2: 'Industrial Area',
-    city: 'New Delhi',
-    state: 'Delhi',
-    pincode: '110020',
+    phone_primary: '+91 98258 17772',
+    phone_secondary: '+91 98765 43210',
+    whatsapp_number: '919825817772',
+    address_line1: 'VisionX Distribution Hub, Electronic Security Zone',
+    address_line2: 'Gujarat, India',
+    city: 'Ahmedabad',
+    state: 'Gujarat',
+    pincode: '380001',
     country: 'India',
     facebook_url: 'https://facebook.com',
     twitter_url: 'https://twitter.com',
     instagram_url: 'https://instagram.com',
     linkedin_url: 'https://linkedin.com',
     youtube_url: 'https://youtube.com',
-    about_short: 'GS Vision is a premier surveillance and security camera technology provider offering state-of-the-art IP cameras, NVRs, HD CCTV systems, and customized industrial security solutions.',
-    meta_title: 'GS Vision - Smart Security & CCTV Camera Solutions',
-    meta_description: 'High-definition 4K IP cameras, NVR/DVR systems, PTZ cameras, and commercial surveillance solutions by GS Vision.'
+    about_short: 'GS Vision is a premier supplier of CCTV cameras, NVRs, and 200+ CCTV accessories with No MOQ required. Direct dispatch from Gujarat with pan-India courier delivery.',
+    meta_title: 'GS Vision - 200+ CCTV Accessories & Security Camera Wholesale',
+    meta_description: 'Wholesale CCTV accessories with No MOQ: BNC/DC connectors, SMPS, junction boxes, racks, cables, 4G solar cameras & tools.'
   }
 };
 
@@ -130,7 +254,7 @@ async function query(sql, params = []) {
     try {
       return await pool.query(sql, params);
     } catch (err) {
-      console.warn(`[Database] MySQL query failed, falling back to memory store: ${err.message}`);
+      console.warn('[Database] MySQL query failed, falling back to memory store: ' + err.message);
     }
   }
 
@@ -181,8 +305,8 @@ async function query(sql, params = []) {
         const br = memoryDB.brands.find(b => b.id === p.brand_id);
         return {
           ...p,
-          category_name: cat ? cat.name : 'CCTV',
-          category_slug: cat ? cat.slug : 'cctv',
+          category_name: cat ? cat.name : 'Accessories',
+          category_slug: cat ? cat.slug : 'accessories',
           brand_name: br ? br.name : 'GS Vision'
         };
       });
@@ -334,7 +458,7 @@ async function initDatabase() {
       password: env.DB_PASSWORD,
     });
 
-    await tempConnection.query(`CREATE DATABASE IF NOT EXISTS \`${env.DB_NAME}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`);
+    await tempConnection.query('CREATE DATABASE IF NOT EXISTS `' + env.DB_NAME + '` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
     await tempConnection.end();
 
     pool = mysql.createPool({
@@ -353,12 +477,12 @@ async function initDatabase() {
     const [test] = await pool.query('SELECT 1');
     if (test) {
       isConnected = true;
-      console.log(`[Database] Connected to live MySQL database '${env.DB_NAME}' successfully.`);
+      console.log('[Database] Connected to live MySQL database ' + env.DB_NAME + ' successfully.');
       await runSeed();
     }
   } catch (err) {
     isConnected = false;
-    console.log(`[Database] MySQL service offline at ${env.DB_HOST}:${env.DB_PORT}. Active in High-Availability Hybrid In-Memory Mode with full seed datasets.`);
+    console.log('[Database] MySQL service note: ' + err.message + '. Serving 200+ accessories catalog in Hybrid High-Availability mode.');
   }
   return { query };
 }

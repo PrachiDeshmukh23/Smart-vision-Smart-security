@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation, Outlet, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Outlet } from 'react-router-dom';
 
 // Providers
 import { AuthProvider } from './context/AuthContext';
@@ -16,6 +16,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
+import PriceList from './pages/PriceList';
 import Solutions from './pages/Solutions';
 import Offers from './pages/Offers';
 import Dealer from './pages/Dealer';
@@ -118,6 +119,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/products" element={<Products onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/products/:slug" element={<ProductDetail onOpenEnquiry={handleOpenEnquiry} />} />
+            <Route path="/price-list" element={<PriceList onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/solutions" element={<Solutions onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/offers" element={<Offers onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/dealer" element={<Dealer />} />
