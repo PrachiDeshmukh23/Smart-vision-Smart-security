@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Image as ImageIcon, Eye, Sparkles } from 'lucide-react';
 import api from '../api/axios';
 import PageHeader from '../components/common/PageHeader';
@@ -17,7 +17,7 @@ export default function Gallery() {
 
   const defaultGallery = [
     { id: 1, title: 'GS Vision 3MP HD Bullet Camera Lineup', category: 'Products', image: '/assets/products/bullet-1.jpg' },
-    { id: 2, title: '360 Fisheye Panoramic Camera Angle', category: 'Products', image: '/assets/products/bullet-fisheye.jpg' },
+    { id: 2, title: '360° Fisheye Panoramic Camera Angle', category: 'Products', image: '/assets/products/bullet-fisheye.jpg' },
     { id: 3, title: 'Smart 8+2 PoE Switch Server Rack Install', category: 'Installations', image: '/assets/products/poe-8.jpg' },
     { id: 4, title: 'Solar Powered 4G Farm Remote Camera', category: 'Installations', image: '/assets/categories/solar.jpg' },
     { id: 5, title: 'Outdoor Weatherproof CAT6 305M Roll', category: 'Products', image: '/assets/products/cat6.jpg' },
@@ -33,7 +33,6 @@ export default function Gallery() {
         if (res.data.success && res.data.gallery && res.data.gallery.length > 0) {
           setItems(res.data.gallery);
         } else {
-          // Fallback to initial display items filtered by category
           setItems(activeCategory === 'All' ? defaultGallery : defaultGallery.filter(g => g.category === activeCategory));
         }
       } catch (err) {
@@ -51,24 +50,24 @@ export default function Gallery() {
   };
 
   return (
-    <div className="space-y-12 pb-20">
+    <div className="bg-[#F7F8F8] space-y-12 pb-20">
       <PageHeader
-        title="Photo & Installation Gallery"
-        subtitle="Explore GS Vision equipment, client surveillance installations, and event highlights."
+        title="Hardware &amp; Installation Gallery"
+        subtitle="Explore project deployments, camera field views, and product showcases across India."
         breadcrumbs={[{ label: 'Gallery' }]}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Category Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-800">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-[#E6E6E6]">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors whitespace-nowrap ${
                 activeCategory === cat
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  ? 'bg-[#009B72] text-white shadow-sm'
+                  : 'bg-white text-[#404040] hover:bg-[#E6E6E6] border border-[#E6E6E6]'
               }`}
             >
               {cat}
@@ -76,38 +75,36 @@ export default function Gallery() {
           ))}
         </div>
 
+        {/* Gallery Grid */}
         {loading ? (
-          <Loader text="Loading gallery photos..." />
+          <div className="py-20 flex justify-center"><Loader text="Loading gallery photos..." /></div>
         ) : items.length === 0 ? (
           <EmptyState
-            title="No Images in Category"
-            message="No photos have been uploaded for this category yet."
+            title="No Photos Found"
+            description="There are currently no photos in this gallery section."
           />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {items.map((item, idx) => (
               <div
                 key={item.id || idx}
                 onClick={() => openLightbox(idx)}
-                className="group relative bg-slate-900 border border-slate-800 hover:border-cyan-500/50 rounded-2xl overflow-hidden aspect-[4/3] cursor-pointer shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10 hover:-translate-y-1"
+                className="group relative bg-white border border-[#E6E6E6] rounded-2xl overflow-hidden shadow-card hover:border-[#009B72] hover:shadow-card-hover transition-all cursor-pointer aspect-4/3 flex items-center justify-center p-4"
               >
                 <img
-                  src={item.image}
+                  src={item.image_url || item.image || '/assets/products/placeholder.jpg'}
                   alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
+                  className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/assets/products/placeholder.jpg';
+                  }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5">
-                  <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider mb-1">
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#4EEDB8]">
                     {item.category}
                   </span>
-                  <h4 className="text-sm font-bold text-white leading-snug">
-                    {item.title}
-                  </h4>
-                  <div className="mt-2 flex items-center gap-1 text-xs text-cyan-300 font-semibold">
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>Click to Expand</span>
-                  </div>
+                  <h4 className="text-sm font-bold text-white line-clamp-1">{item.title}</h4>
                 </div>
               </div>
             ))}
@@ -115,15 +112,14 @@ export default function Gallery() {
         )}
       </div>
 
-      {/* Lightbox Modal */}
-      <Lightbox
-        isOpen={lightboxOpen}
-        images={items}
-        currentIndex={currentIndex}
-        onClose={() => setLightboxOpen(false)}
-        onPrev={() => setCurrentIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1))}
-        onNext={() => setCurrentIndex((prev) => (prev + 1) % items.length)}
-      />
+      {lightboxOpen && items.length > 0 && (
+        <Lightbox
+          images={items.map((i) => i.image_url || i.image)}
+          currentIndex={currentIndex}
+          onClose={() => setLightboxOpen(false)}
+          onNavigate={(newIdx) => setCurrentIndex(newIdx)}
+        />
+      )}
     </div>
   );
 }

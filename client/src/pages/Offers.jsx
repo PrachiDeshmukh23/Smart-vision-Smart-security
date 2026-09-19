@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Tag, Calendar, Sparkles, ArrowRight, ShieldCheck, MessageSquare } from 'lucide-react';
+﻿import React, { useState, useEffect } from 'react';
+import { Tag, Calendar, Sparkles, ArrowRight, ShieldCheck, MessageSquare, PhoneCall } from 'lucide-react';
 import api from '../api/axios';
 import PageHeader from '../components/common/PageHeader';
 import Loader from '../components/ui/Loader';
@@ -27,73 +27,71 @@ export default function Offers({ onOpenEnquire }) {
   }, []);
 
   return (
-    <div className="space-y-12 pb-20">
+    <div className="bg-[#F7F8F8] space-y-12 pb-20">
       <PageHeader
-        title="Promotions & Special Offers"
-        subtitle="Exclusive dealer discounts, bulk combo rewards, and seasonal hardware promotions."
+        title="Promotions &amp; Special Offers"
+        subtitle="Exclusive installer discounts, wholesale accessories combo rewards, and seasonal CCTV hardware promotions."
         breadcrumbs={[{ label: 'Offers' }]}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {loading ? (
-          <Loader text="Loading active offers..." />
+          <div className="py-20 flex justify-center"><Loader text="Loading active offers..." /></div>
         ) : offers.length === 0 ? (
           <EmptyState
             title="No Active Offers"
-            message="There are currently no active promotional campaigns. Check back soon or contact our sales team for custom wholesale quotes."
-            action={
-              <button
-                onClick={() => onOpenEnquire && onOpenEnquire()}
-                className="px-6 py-2.5 bg-cyan-600 text-white rounded-xl text-xs font-bold"
-              >
-                Inquire for Dealer Pricing
-              </button>
-            }
+            description="Check back soon for upcoming installer combos and wholesale discount schemes."
           />
         ) : (
-          <div className="space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {offers.map((offer) => (
               <div
                 key={offer.id}
-                className="relative bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 border border-amber-500/40 rounded-3xl p-8 sm:p-12 overflow-hidden shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8"
+                className="bg-white border border-[#E6E6E6] rounded-2xl overflow-hidden shadow-card hover:border-[#009B72] hover:shadow-card-hover transition-all flex flex-col justify-between"
               >
-                <div className="space-y-4 max-w-2xl">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-bold uppercase tracking-wider">
-                    <Tag className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Special Promotion</span>
+                {offer.banner_image && (
+                  <div className="h-44 bg-[#FAFAFA] overflow-hidden flex items-center justify-center p-4 border-b border-[#F1F3F5]">
+                    <img
+                      src={offer.banner_image}
+                      alt={offer.title}
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
+                )}
+
+                <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <span className="bg-[#FF5A2C] text-white text-[10px] font-black px-2 py-0.5 rounded uppercase">
+                        LIMITED OFFER
+                      </span>
+                      {offer.discount_percentage && (
+                        <span className="text-xs font-black text-[#009B72]">
+                          Save {offer.discount_percentage}%
+                        </span>
+                      )}
+                    </div>
+
+                    <h3 className="text-base sm:text-lg font-black text-[#151515] leading-snug">
+                      {offer.title}
+                    </h3>
+
+                    {offer.description && (
+                      <p className="text-xs sm:text-sm text-[#666666] mt-2 leading-relaxed">
+                        {offer.description}
+                      </p>
+                    )}
                   </div>
 
-                  <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-tight">
-                    {offer.title}
-                  </h2>
-
-                  <p className="text-slate-300 text-base leading-relaxed">
-                    {offer.description}
-                  </p>
-
-                  {offer.end_date && (
-                    <div className="flex items-center gap-2 text-xs font-medium text-amber-400 pt-1">
-                      <Calendar className="w-4 h-4" />
-                      <span>Valid until: {new Date(offer.end_date).toLocaleDateString()}</span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 w-full lg:w-auto">
-                  <button
-                    onClick={() => onOpenEnquire && onOpenEnquire()}
-                    className="px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 shadow-xl shadow-orange-500/25 transition-all flex items-center justify-center gap-2 text-center"
-                  >
-                    <span>{offer.cta_text || 'Claim Offer Now'}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-
-                  <Link
-                    to="/contact"
-                    className="px-6 py-3.5 rounded-xl font-semibold text-xs text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors text-center"
-                  >
-                    Contact Sales Team
-                  </Link>
+                  <div className="pt-4 border-t border-[#F1F3F5] flex items-center gap-2">
+                    <button
+                      onClick={() => onOpenEnquire && onOpenEnquire()}
+                      className="w-full py-2 bg-[#009B72] hover:bg-[#007A5A] text-white rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-1.5 shadow-sm"
+                    >
+                      <MessageSquare className="w-3.5 h-3.5" />
+                      <span>Claim this Offer</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

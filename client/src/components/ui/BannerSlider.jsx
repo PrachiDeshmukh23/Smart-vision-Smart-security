@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, ShieldCheck, ArrowRight, MessageSquare } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShieldCheck, ArrowRight, MessageSquare, PhoneCall, Sparkles } from 'lucide-react';
 
 export default function BannerSlider({ banners = [], onEnquire }) {
   const [current, setCurrent] = useState(0);
@@ -8,27 +8,27 @@ export default function BannerSlider({ banners = [], onEnquire }) {
   const slides = banners.length > 0 ? banners : [
     {
       id: 1,
-      title: 'Next-Gen CCTV & Smart Surveillance',
-      subtitle: 'Smart Vision.. Smart Security | High-Definition Optical Clarity & 24/7 Color Night Vision',
-      cta_text: 'Explore Products',
+      title: 'Smart Vision.. Smart Security Systems',
+      subtitle: 'Complete CCTV surveillance range, HD cameras, SMPS power supplies, and 200+ accessories with NO Minimum Order Quantity (No MOQ).',
+      cta_text: 'Explore Catalogue',
       cta_url: '/products',
       desktop_image: '/assets/banners/hero-1.jpg'
     },
     {
       id: 2,
-      title: 'Solar Powered 4G Remote Security',
-      subtitle: 'Continuous 360� Monitoring Anywhere Without WiFi Or Electrical Infrastructure',
-      cta_text: 'View Solar Cameras',
-      cta_url: '/products?category=solar-ptz-cameras',
-      desktop_image: '/assets/categories/solar.jpg'
+      title: 'Live Wholesale CCTV Price List',
+      subtitle: 'Transparent dealer & installer pricing with express pan-India dispatch and token advance COD support.',
+      cta_text: 'View Price List',
+      cta_url: '/price-list',
+      desktop_image: '/assets/categories/cctv.png'
     },
     {
       id: 3,
-      title: 'Industrial PoE Switches & Networking',
-      subtitle: 'Zero Packet Loss Transmission For Expanding Commercial Surveillance Networks',
-      cta_text: 'Become a Dealer',
-      cta_url: '/dealer',
-      desktop_image: '/assets/categories/poe.jpg'
+      title: 'Solar Powered 4G PTZ Security Cameras',
+      subtitle: 'Continuous 360° outdoor surveillance without WiFi or AC power grid dependency.',
+      cta_text: 'View Solar Cameras',
+      cta_url: '/products?category=solar-ptz-cameras',
+      desktop_image: '/assets/categories/solar.jpg'
     }
   ];
 
@@ -45,38 +45,42 @@ export default function BannerSlider({ banners = [], onEnquire }) {
   const slide = slides[current];
 
   return (
-    <div className="relative w-full h-[480px] sm:h-[540px] lg:h-[580px] bg-slate-950 overflow-hidden select-none border-b border-slate-800">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#07111F] via-[#0B192C]/90 to-transparent z-10" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C] via-transparent to-transparent z-10" />
+    <div className="relative w-full h-[460px] sm:h-[500px] lg:h-[540px] bg-[#0F201B] overflow-hidden select-none border-b border-[#E6E6E6]">
+      {/* Background Gradient Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0F201B] via-[#0F201B]/90 to-transparent z-10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0F201B]/80 via-transparent to-transparent z-10" />
 
-      <div className="absolute top-1/4 right-1/4 w-[450px] h-[450px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none z-10" />
+      {/* Decorative Glow */}
+      <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-[#009B72]/20 rounded-full blur-[100px] pointer-events-none z-10" />
 
+      {/* Background image */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 transform scale-105 opacity-30 mix-blend-luminosity"
+        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 transform scale-105 opacity-35 mix-blend-luminosity"
         style={{
           backgroundImage: `url(${slide?.desktop_image || '/assets/banners/hero-1.jpg'})`,
         }}
       />
 
+      {/* Content */}
       <div className="relative z-20 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center">
-        <div className="max-w-2xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
+        <div className="max-w-2xl space-y-5">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#009B72]/20 border border-[#009B72]/40 text-[#4EEDB8] text-xs font-bold uppercase tracking-wider backdrop-blur-md">
             <ShieldCheck className="w-4 h-4" />
-            <span>GS Vision Professional Security</span>
+            <span>GS VISION SECURITY</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
             {slide?.title}
           </h1>
 
-          <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-gray-200 font-normal leading-relaxed max-w-xl">
             {slide?.subtitle}
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center gap-3 pt-2">
             <Link
               to={slide?.cta_url || '/products'}
-              className="px-7 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 shadow-xl shadow-cyan-500/25 transition-all flex items-center gap-2 active:scale-95"
+              className="px-6 py-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-[#009B72] hover:bg-[#007A5A] shadow-lg shadow-[#009B72]/30 transition-all flex items-center gap-2"
             >
               <span>{slide?.cta_text || 'Explore Products'}</span>
               <ArrowRight className="w-4 h-4" />
@@ -84,10 +88,10 @@ export default function BannerSlider({ banners = [], onEnquire }) {
 
             <button
               onClick={() => onEnquire && onEnquire()}
-              className="px-6 py-3.5 rounded-xl font-bold text-slate-200 hover:text-white bg-slate-900/80 hover:bg-slate-800 border border-slate-700 backdrop-blur-md transition-all flex items-center gap-2"
+              className="px-5 py-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md transition-all flex items-center gap-2"
             >
-              <MessageSquare className="w-4 h-4 text-cyan-400" />
-              <span>Contact Us</span>
+              <MessageSquare className="w-4 h-4 text-[#4EEDB8]" />
+              <span>Enquire Now</span>
             </button>
           </div>
         </div>
@@ -97,14 +101,14 @@ export default function BannerSlider({ banners = [], onEnquire }) {
         <>
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-slate-900/60 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/60 backdrop-blur-sm transition-all"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/40 hover:bg-[#009B72] text-white border border-white/10 backdrop-blur-sm transition-all"
             aria-label="Previous Slide"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-slate-900/60 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/60 backdrop-blur-sm transition-all"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/40 hover:bg-[#009B72] text-white border border-white/10 backdrop-blur-sm transition-all"
             aria-label="Next Slide"
           >
             <ChevronRight className="w-5 h-5" />
@@ -113,13 +117,13 @@ export default function BannerSlider({ banners = [], onEnquire }) {
       )}
 
       {slides.length > 1 && (
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2">
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2">
           {slides.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrent(idx)}
               className={`h-2 rounded-full transition-all ${
-                current === idx ? 'w-8 bg-cyan-400' : 'w-2 bg-slate-600 hover:bg-slate-400'
+                current === idx ? 'w-8 bg-[#009B72]' : 'w-2 bg-white/40 hover:bg-white/80'
               }`}
               aria-label={`Go to slide ${idx + 1}`}
             />

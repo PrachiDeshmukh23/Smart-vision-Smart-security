@@ -1,22 +1,23 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { 
   FileSpreadsheet, Download, Search, MessageSquare, Filter, 
-  CheckCircle2, Shield, Phone, Sparkles, ExternalLink, Printer, ArrowUpDown
+  CheckCircle2, Shield, Phone, Sparkles, ExternalLink, Printer, ArrowUpDown,
+  PhoneCall, PackageCheck, Truck, Eye
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import PageHeader from '../components/common/PageHeader';
 import Loader from '../components/ui/Loader';
-import Badge from '../components/ui/Badge';
 import { useSettings } from '../context/SettingsContext';
 
-export default function PriceList({ onOpenEnquiry }) {
+export default function PriceList({ onOpenEnquire }) {
   const { settings } = useSettings();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [sortField, setSortField] = useState('category');
+  const [sortField, setSortField] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
@@ -24,14 +25,14 @@ export default function PriceList({ onOpenEnquiry }) {
       try {
         setLoading(true);
         const [prodRes, catRes] = await Promise.all([
-          api.get('/products?limit=100'),
-          api.get('/categories')
+          api.get('/products?limit=100').catch(() => ({ data: { products: [] } })),
+          api.get('/categories').catch(() => ({ data: { categories: [] } }))
         ]);
         if (prodRes.data?.products) {
           setProducts(prodRes.data.products);
         }
-        if (catRes.data?.data) {
-          setCategories(catRes.data.data);
+        if (catRes.data?.categories) {
+          setCategories(catRes.data.categories);
         }
       } catch (err) {
         console.error('Failed to load price list data:', err);
@@ -45,7 +46,7 @@ export default function PriceList({ onOpenEnquiry }) {
   const filteredProducts = useMemo(() => {
     return products
       .filter((p) => {
-        const matchesCat = selectedCategory === 'All' || p.category_name === selectedCategory || String(p.category_id) === selectedCategory;
+        const matchesCat = selectedCategory === 'All' || p.category_name === selectedCategory || p.category_slug === selectedCategory;
         const matchesSearch = 
           p.name.toLowerCase().includes(search.toLowerCase()) ||
           (p.model_number && p.model_number.toLowerCase().includes(search.toLowerCase())) ||
@@ -73,86 +74,91 @@ export default function PriceList({ onOpenEnquiry }) {
   };
 
   const generateWhatsAppOrderUrl = (item) => {
-    const phone = settings?.whatsapp_number || '919876543210';
+    const phone = (settings?.whatsapp_number || '919876543210').replace(/[^0-9]/g, '');
+    const priceText = item.price ? `₹${item.price.toLocaleString('en-IN')} (Excl. GST)` : 'Trade Inquiry';
     const text = encodeURIComponent(
-      `Hello GS Vision, I want to order/inquire wholesale price for:\n\n*Product:* ${item.name}\n*SKU/Model:* ${item.model_number || 'N/A'}\n*Price:* ?${item.price?.toLocaleString('en-IN') || 'TBD'} (Excl. GST)\n*Category:* ${item.category_name || 'Accessories'}\n\nPlease share dispatch details & payment info.`
+      `Hello GS Vision, I want to order/inquire wholesale price for:\n\n*Product:* ${item.name}\n*SKU/Model:* ${item.model_number || 'N/A'}\n*Price:* ${priceText}\n*Category:* ${item.category_name || 'Accessories'}\n\nPlease share payment & dispatch details.`
     );
-    return `https://wa.me/${phone.replace(/[^0-9]/g, '')}?text=${text}`;
+    return `https://wa.me/${phone}?text=${text}`;
   };
 
   const handlePrint = () => {
     window.print();
   };
 
+  const cleanWhatsApp = (settings?.whatsapp_number || '919876543210').replace(/[^0-9]/g, '');
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 pb-20">
+    <div className="min-h-screen bg-[#F7F8F8] text-[#151515] pb-20 space-y-8">
       <PageHeader
         title="Live Wholesale Price List"
-        subtitle="Transparent pricing for 200+ CCTV accessories & cameras with NO Minimum Order Quantity (No MOQ). Direct dispatch across India."
+        subtitle="Transparent wholesale rates for 200+ CCTV accessories, cameras & networking hardware with NO Minimum Order Quantity (No MOQ)."
+        breadcrumbs={[{ label: 'Wholesale Price List' }]}
       />
 
-      {/* Notice Banner */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
-        <div className="bg-gradient-to-r from-amber-500/15 via-slate-900 to-cyan-500/15 border border-amber-500/30 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl backdrop-blur-md">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 font-bold">
-              ?
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        
+        {/* CCTV PRO Wholesale Notice Banner */}
+        <div className="bg-white border-2 border-[#009B72] rounded-2xl p-5 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3.5">
+            <div className="w-12 h-12 rounded-xl bg-[#E8F8F3] text-[#009B72] flex items-center justify-center shrink-0 font-bold">
+              <PackageCheck className="w-6 h-6" />
             </div>
             <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-white font-bold text-sm">Wholesale Pricing Policy:</span>
-                <span className="bg-amber-400 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">All Prices Excl. GST</span>
-                <span className="bg-cyan-400 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">NO MOQ REQUIRED</span>
+              <div className="flex items-center gap-2">
+                <span className="bg-[#FF5A2C] text-white text-[10px] font-black px-2 py-0.5 rounded uppercase">
+                  TRADE TERMS
+                </span>
+                <span className="text-xs font-bold text-[#009B72]">Wholesale Rates &bull; No MOQ</span>
               </div>
-              <p className="text-xs text-slate-300 mt-1">
-                COD is available with a token advance to confirm your order. Orders are processed with personal courier coordination via WhatsApp/Call.
+              <p className="text-xs sm:text-sm text-[#404040] mt-1 leading-relaxed">
+                All prices mentioned are <strong>excluding GST</strong>. Immediate dispatch via express courier with token advance COD.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 w-full md:w-auto shrink-0">
+          <div className="flex items-center gap-2 shrink-0 w-full md:w-auto">
             <button
               onClick={handlePrint}
-              className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold border border-slate-700 transition"
+              className="flex-1 md:flex-initial px-4 py-2.5 bg-[#F7F8F8] hover:bg-[#E6E6E6] text-[#151515] text-xs font-bold rounded-lg border border-[#E6E6E6] transition-colors flex items-center justify-center gap-1.5"
             >
-              <Printer className="w-3.5 h-3.5" />
+              <Printer className="w-4 h-4 text-[#666666]" />
               <span>Print / PDF</span>
             </button>
             <a
-              href={`https://wa.me/${(settings?.whatsapp_number || '919876543210').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello GS Vision, please send me the latest full PDF/Excel Wholesale Price List.')}`}
+              href={`https://wa.me/${cleanWhatsApp}?text=Hello%20GS%20Vision,%20please%20send%20me%20your%20latest%20wholesale%20PDF%20price%20list`}
               target="_blank"
               rel="noreferrer"
-              className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-500/20 transition"
+              className="flex-1 md:flex-initial px-4 py-2.5 bg-[#009B72] hover:bg-[#007A5A] text-white text-xs font-bold rounded-lg shadow-sm transition-colors flex items-center justify-center gap-1.5"
             >
-              <MessageSquare className="w-3.5 h-3.5" />
-              <span>Request Full PDF on WhatsApp</span>
+              <PhoneCall className="w-4 h-4" />
+              <span>WhatsApp PDF</span>
             </a>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-6">
-        {/* Filter & Search Toolbar */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 shadow-lg">
-          <div className="relative w-full md:w-80">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+        {/* Filter Controls Bar */}
+        <div className="bg-white border border-[#E6E6E6] rounded-xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Search Box */}
+          <div className="relative w-full md:w-96">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8C8C8C]" />
             <input
               type="text"
-              placeholder="Search by product name, SKU or model..."
+              placeholder="Search product, SKU, model or accessory..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+              className="w-full bg-[#F7F8F8] border border-[#E6E6E6] text-[#151515] placeholder-[#8C8C8C] text-xs sm:text-sm rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-[#009B72] focus:bg-white transition-all"
             />
           </div>
 
-          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-thin">
-            <span className="text-xs text-slate-400 font-semibold whitespace-nowrap hidden sm:inline">Category:</span>
+          {/* Category Tabs */}
+          <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
             <button
               onClick={() => setSelectedCategory('All')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors whitespace-nowrap shrink-0 ${
                 selectedCategory === 'All'
-                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
-                  : 'bg-slate-800 text-slate-300 hover:text-white'
+                  ? 'bg-[#009B72] text-white'
+                  : 'bg-[#F7F8F8] text-[#404040] hover:bg-[#E6E6E6]'
               }`}
             >
               All Items ({products.length})
@@ -161,10 +167,10 @@ export default function PriceList({ onOpenEnquiry }) {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.name)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors whitespace-nowrap shrink-0 ${
                   selectedCategory === cat.name
-                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
-                    : 'bg-slate-800 text-slate-300 hover:text-white'
+                    ? 'bg-[#009B72] text-white'
+                    : 'bg-[#F7F8F8] text-[#404040] hover:bg-[#E6E6E6]'
                 }`}
               >
                 {cat.name}
@@ -173,132 +179,113 @@ export default function PriceList({ onOpenEnquiry }) {
           </div>
         </div>
 
-        {/* Price Table */}
-        {loading ? (
-          <Loader text="Loading live price list..." />
-        ) : filteredProducts.length === 0 ? (
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center space-y-3">
-            <FileSpreadsheet className="w-12 h-12 text-slate-600 mx-auto" />
-            <h3 className="text-lg font-bold text-white">No products match your search</h3>
-            <p className="text-xs text-slate-400">Try adjusting your keyword filter or select another category.</p>
-            <button
-              onClick={() => { setSearch(''); setSelectedCategory('All'); }}
-              className="px-4 py-2 bg-cyan-500 text-slate-950 font-bold rounded-xl text-xs"
-            >
-              Reset Filters
-            </button>
-          </div>
-        ) : (
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+        {/* Price Matrix Table Container */}
+        <div className="bg-white border border-[#E6E6E6] rounded-2xl shadow-card overflow-hidden">
+          {loading ? (
+            <div className="py-20 flex justify-center">
+              <Loader text="Loading live price matrix..." />
+            </div>
+          ) : filteredProducts.length === 0 ? (
+            <div className="py-16 text-center text-[#666666] text-sm">
+              No products found matching "{search}".
+            </div>
+          ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse">
-                <thead className="bg-slate-950/80 text-slate-400 uppercase tracking-wider text-[11px] border-b border-slate-800">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead className="bg-[#F7F8F8] text-[#151515] font-extrabold uppercase text-[11px] tracking-wider border-b border-[#E6E6E6]">
                   <tr>
-                    <th className="py-4 px-4 font-semibold">Image</th>
-                    <th 
-                      onClick={() => handleSort('name')}
-                      className="py-4 px-4 font-semibold cursor-pointer hover:text-cyan-400 select-none"
-                    >
-                      <div className="flex items-center gap-1.5">
-                        <span>Product & Description</span>
-                        <ArrowUpDown className="w-3 h-3" />
-                      </div>
-                    </th>
-                    <th 
-                      onClick={() => handleSort('model_number')}
-                      className="py-4 px-4 font-semibold cursor-pointer hover:text-cyan-400 select-none"
-                    >
-                      <div className="flex items-center gap-1.5">
+                    <th className="py-3.5 px-4">Item &amp; Image</th>
+                    <th className="py-3.5 px-4 cursor-pointer hover:text-[#009B72]" onClick={() => handleSort('model_number')}>
+                      <div className="flex items-center gap-1">
                         <span>SKU / Model</span>
                         <ArrowUpDown className="w-3 h-3" />
                       </div>
                     </th>
-                    <th 
-                      onClick={() => handleSort('category_name')}
-                      className="py-4 px-4 font-semibold cursor-pointer hover:text-cyan-400 select-none"
-                    >
-                      <div className="flex items-center gap-1.5">
-                        <span>Category</span>
-                        <ArrowUpDown className="w-3 h-3" />
-                      </div>
-                    </th>
-                    <th 
-                      onClick={() => handleSort('price')}
-                      className="py-4 px-4 font-semibold cursor-pointer hover:text-cyan-400 select-none text-right"
-                    >
-                      <div className="flex items-center justify-end gap-1.5">
-                        <span>Wholesale Price</span>
-                        <ArrowUpDown className="w-3 h-3" />
-                      </div>
-                    </th>
-                    <th className="py-4 px-4 font-semibold text-center">MOQ</th>
-                    <th className="py-4 px-4 font-semibold text-right">Quick Order</th>
+                    <th className="py-3.5 px-4">Category</th>
+                    <th className="py-3.5 px-4">Wholesale Price (Excl. GST)</th>
+                    <th className="py-3.5 px-4">Stock &amp; MOQ</th>
+                    <th className="py-3.5 px-4 text-right">Direct Order</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                <tbody className="divide-y divide-[#F1F3F5]">
                   {filteredProducts.map((p, idx) => (
-                    <tr key={p.id || idx} className="hover:bg-slate-800/40 transition group">
-                      <td className="py-3 px-4">
-                        <div className="w-12 h-12 rounded-lg bg-slate-950 border border-slate-800 p-1 flex items-center justify-center shrink-0 overflow-hidden">
-                          <img
-                            src={p.main_image || '/assets/products/placeholder.jpg'}
-                            alt={p.name}
-                            className="max-w-full max-h-full object-contain group-hover:scale-110 transition duration-300"
-                            onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=150&q=80'; }}
-                          />
+                    <tr key={p.id || idx} className="hover:bg-[#F9FBFA] transition-colors">
+                      
+                      {/* Product Thumbnail & Title */}
+                      <td className="py-3.5 px-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-lg bg-[#FAFAFA] border border-[#E6E6E6] p-1 flex items-center justify-center shrink-0">
+                            <img
+                              src={p.main_image || '/assets/products/placeholder.jpg'}
+                              alt=""
+                              className="max-h-full max-w-full object-contain"
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = '/assets/products/placeholder.jpg';
+                              }}
+                            />
+                          </div>
+                          <div>
+                            <Link to={`/products/${p.slug}`} className="font-bold text-[#151515] hover:text-[#009B72] transition-colors line-clamp-1">
+                              {p.name}
+                            </Link>
+                            {p.short_description && (
+                              <p className="text-[11px] text-[#8C8C8C] line-clamp-1">{p.short_description}</p>
+                            )}
+                          </div>
                         </div>
                       </td>
-                      <td className="py-3 px-4 max-w-xs">
-                        <a href={`/products/${p.slug}`} className="font-bold text-white hover:text-cyan-400 transition line-clamp-1">
-                          {p.name}
-                        </a>
-                        {p.short_description && (
-                          <p className="text-[11px] text-slate-400 line-clamp-1 mt-0.5">{p.short_description}</p>
+
+                      {/* SKU / Model */}
+                      <td className="py-3.5 px-4 font-mono font-bold text-[#404040]">
+                        <span className="bg-[#F1F3F5] px-2 py-0.5 rounded border border-[#E6E6E6] text-xs">
+                          {p.model_number || 'GS-ACC-01'}
+                        </span>
+                      </td>
+
+                      {/* Category */}
+                      <td className="py-3.5 px-4 text-[#666666]">
+                        {p.category_name || 'Accessories'}
+                      </td>
+
+                      {/* Price */}
+                      <td className="py-3.5 px-4 font-extrabold text-[#009B72]">
+                        {p.price ? (
+                          <div className="flex flex-col">
+                            <span className="text-sm">₹{Number(p.price).toLocaleString('en-IN')}</span>
+                            <span className="text-[10px] text-[#8C8C8C] font-normal">+ 18% GST Applicable</span>
+                          </div>
+                        ) : (
+                          <span className="text-xs text-[#FF5A2C] font-bold">Inquire Trade Rate</span>
                         )}
-                        {p.featured ? (
-                          <span className="inline-block mt-1 bg-cyan-500/15 text-cyan-400 text-[10px] font-bold px-1.5 py-0.2 rounded border border-cyan-500/20">
-                            ? Featured
-                          </span>
-                        ) : null}
                       </td>
-                      <td className="py-3 px-4 font-mono font-bold text-cyan-300 whitespace-nowrap">
-                        {p.model_number || 'GS-ACC-01'}
-                      </td>
-                      <td className="py-3 px-4 whitespace-nowrap">
-                        <span className="bg-slate-800 text-slate-300 text-[11px] font-semibold px-2 py-0.5 rounded-md">
-                          {p.category_name || 'Accessories'}
+
+                      {/* MOQ */}
+                      <td className="py-3.5 px-4">
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#009B72] bg-[#E8F8F3] px-2 py-0.5 rounded">
+                          <CheckCircle2 className="w-3 h-3" /> NO MOQ
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-right whitespace-nowrap">
-                        <div className="text-sm font-black text-amber-400 font-mono">
-                          ?{p.price ? p.price.toLocaleString('en-IN') : 'Call'}
-                        </div>
-                        <span className="text-[10px] text-slate-500 block">+ GST</span>
-                      </td>
-                      <td className="py-3 px-4 text-center whitespace-nowrap">
-                        <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                          1 Pc (No MOQ)
-                        </span>
-                      </td>
-                      <td className="py-3 px-4 text-right whitespace-nowrap">
-                        <div className="flex items-center justify-end gap-1.5">
+
+                      {/* WhatsApp 1-Click Order */}
+                      <td className="py-3.5 px-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <Link
+                            to={`/products/${p.slug}`}
+                            className="p-1.5 rounded-lg text-[#666666] hover:text-[#151515] hover:bg-[#F1F3F5] transition-colors"
+                            title="View Specs"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </Link>
                           <a
                             href={generateWhatsAppOrderUrl(p)}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-[11px] font-bold shadow transition"
-                            title="Order directly on WhatsApp"
+                            className="px-3 py-1.5 bg-[#009B72] hover:bg-[#007A5A] text-white text-xs font-bold rounded-lg shadow-sm transition-colors flex items-center gap-1"
                           >
-                            <MessageSquare className="w-3.5 h-3.5" />
+                            <PhoneCall className="w-3.5 h-3.5" />
                             <span>Order</span>
                           </a>
-                          <button
-                            onClick={() => onOpenEnquiry(p)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-[11px] font-semibold border border-slate-700 transition"
-                            title="Request Quotation"
-                          >
-                            Quote
-                          </button>
                         </div>
                       </td>
                     </tr>
@@ -306,47 +293,9 @@ export default function PriceList({ onOpenEnquiry }) {
                 </tbody>
               </table>
             </div>
-
-            {/* Footer Summary */}
-            <div className="p-4 bg-slate-950 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
-              <div>
-                Showing <strong className="text-white">{filteredProducts.length}</strong> items in price catalog
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-emerald-400 font-semibold">? In Stock for Immediate Dispatch</span>
-                <span>�</span>
-                <span className="text-amber-400 font-semibold">All Prices Excl. GST</span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* VisionX / Gujarat Direct Sourcing Banner */}
-        <div className="bg-gradient-to-r from-slate-900 via-blue-950/40 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
-          <div className="space-y-2">
-            <span className="text-cyan-400 text-xs font-bold uppercase tracking-wider">Wholesale & Bulk Supply</span>
-            <h3 className="text-xl sm:text-2xl font-black text-white">Need 200+ CCTV Accessories in Bulk?</h3>
-            <p className="text-xs text-slate-300 max-w-2xl">
-              We supply installers, dealers, security companies, and system integrators with direct wholesale pricing from Gujarat. No MOQ required, pan-India courier delivery, and technical assistance.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3 shrink-0">
-            <a
-              href="tel:+919876543210"
-              className="px-5 py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs border border-slate-700 transition flex items-center gap-2"
-            >
-              <Phone className="w-4 h-4 text-cyan-400" />
-              <span>Call Sales Team</span>
-            </a>
-            <a
-              href="/dealer"
-              className="px-5 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-cyan-500/20 transition"
-            >
-              Apply as Dealer
-            </a>
-          </div>
+          )}
         </div>
+
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   Filter, Search, SlidersHorizontal, ArrowUpDown, X,
-  ShieldCheck, RefreshCw, Layers
+  ShieldCheck, RefreshCw, Layers, Sparkles, Check
 } from 'lucide-react';
 import api from '../api/axios';
 import PageHeader from '../components/common/PageHeader';
@@ -82,144 +82,167 @@ export default function Products({ onOpenEnquire }) {
   const hasActiveFilters = currentCategory || currentSearch || currentFeatured || currentSort;
 
   return (
-    <div className="space-y-10 pb-20">
+    <div className="bg-[#F7F8F8] min-h-screen space-y-8 pb-20">
       <PageHeader
-        title="Products Catalogue"
-        subtitle="Explore our comprehensive range of HD CCTV cameras, power supplies, PoE networking, and accessories."
+        title="Products & Accessories Catalogue"
+        subtitle="Explore our comprehensive range of HD CCTV cameras, power supplies, PoE networking, cables, connectors, and mounting hardware."
         breadcrumbs={[{ label: 'Products' }]}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
         {/* Top Controls Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-slate-900/60 border border-slate-800 p-4 rounded-2xl mb-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white border border-[#E6E6E6] p-4 rounded-xl mb-6 shadow-sm">
           {/* Search bar */}
           <form onSubmit={handleSearchSubmit} className="relative w-full md:w-96">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8C8C8C]" />
             <input
               type="text"
-              placeholder="Search cameras, model numbers..."
+              placeholder="Search cameras, connectors, SMPS..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-700 text-sm text-white rounded-xl pl-10 pr-20 py-2.5 focus:outline-none focus:border-cyan-500"
+              className="w-full bg-[#F7F8F8] border border-[#E6E6E6] text-[#151515] placeholder-[#8C8C8C] text-xs sm:text-sm rounded-lg pl-10 pr-20 py-2 focus:outline-none focus:border-[#009B72] focus:bg-white transition-all"
             />
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchTerm('');
+                  updateFilter('search', '');
+                }}
+                className="absolute right-12 top-1/2 -translate-y-1/2 text-[#8C8C8C] hover:text-[#151515]"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
             <button
               type="submit"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-xs font-semibold"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 px-3 py-1 bg-[#009B72] hover:bg-[#007A5A] text-white text-xs font-bold rounded-md transition-colors"
             >
-              Filter
+              Go
             </button>
           </form>
 
-          {/* Right Sorting & Mobile Filter Toggle */}
+          {/* Sort & Mobile filter button */}
           <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
             <button
               onClick={() => setMobileFiltersOpen(true)}
-              className="lg:hidden flex items-center gap-2 px-4 py-2 bg-slate-800 text-slate-200 rounded-xl text-sm font-semibold border border-slate-700"
+              className="lg:hidden flex items-center gap-2 px-3.5 py-2 bg-[#F7F8F8] border border-[#E6E6E6] rounded-lg text-xs font-bold text-[#151515]"
             >
-              <Filter className="w-4 h-4 text-cyan-400" />
-              <span>Filters</span>
+              <Filter className="w-4 h-4 text-[#009B72]" />
+              <span>Categories &amp; Filter</span>
             </button>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400 hidden sm:inline">Sort:</span>
+              <span className="text-xs text-[#666666] font-medium hidden sm:inline">Sort by:</span>
               <select
                 value={currentSort}
                 onChange={(e) => updateFilter('sort', e.target.value)}
-                className="bg-slate-950 border border-slate-700 text-slate-200 text-xs font-medium rounded-xl px-3 py-2.5 focus:outline-none focus:border-cyan-500"
+                className="bg-[#F7F8F8] border border-[#E6E6E6] text-[#151515] text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-[#009B72]"
               >
-                <option value="">Featured / Default</option>
-                <option value="name_asc">Name (A to Z)</option>
-                <option value="price_asc">Price (Low to High)</option>
-                <option value="price_desc">Price (High to Low)</option>
+                <option value="">Featured First</option>
+                <option value="newest">Newest First</option>
+                <option value="name_asc">Name: A to Z</option>
+                <option value="name_desc">Name: Z to A</option>
               </select>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Desktop Sidebar Filters */}
-          <aside className="hidden lg:block space-y-6">
-            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-6">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <div className="flex items-center gap-2 text-sm font-bold text-white">
-                  <Filter className="w-4 h-4 text-cyan-400" />
-                  <span>Filter by Category</span>
-                </div>
-                {hasActiveFilters && (
-                  <button
-                    onClick={clearAllFilters}
-                    className="text-xs text-rose-400 hover:text-rose-300 font-medium"
-                  >
-                    Reset
-                  </button>
-                )}
-              </div>
+        {/* Active Filter Pills */}
+        {hasActiveFilters && (
+          <div className="flex flex-wrap items-center gap-2 mb-6 bg-white p-3 rounded-lg border border-[#E6E6E6]">
+            <span className="text-xs font-bold text-[#666666]">Active Filters:</span>
+            {currentCategory && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#E8F8F3] text-[#009B72] text-xs font-semibold">
+                <span>Category: {categories.find((c) => c.slug === currentCategory)?.name || currentCategory}</span>
+                <button onClick={() => updateFilter('category', '')} className="hover:text-red-500">
+                  <X className="w-3 h-3" />
+                </button>
+              </span>
+            )}
+            {currentSearch && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#E8F8F3] text-[#009B72] text-xs font-semibold">
+                <span>Search: "{currentSearch}"</span>
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    updateFilter('search', '');
+                  }}
+                  className="hover:text-red-500"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </span>
+            )}
+            <button
+              onClick={clearAllFilters}
+              className="text-xs font-bold text-[#FF5A2C] hover:underline ml-2"
+            >
+              Clear All
+            </button>
+          </div>
+        )}
 
-              {/* All Categories Button */}
-              <div>
+        {/* Main Layout Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+          
+          {/* Desktop Categories Sidebar */}
+          <aside className="hidden lg:block bg-white border border-[#E6E6E6] rounded-xl p-5 shadow-card sticky top-20">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#F1F3F5]">
+              <h3 className="text-sm font-extrabold text-[#151515] uppercase tracking-wider flex items-center gap-2">
+                <Layers className="w-4 h-4 text-[#009B72]" />
+                <span>Categories</span>
+              </h3>
+              {currentCategory && (
                 <button
                   onClick={() => updateFilter('category', '')}
-                  className={`w-full text-left px-3 py-2 rounded-xl text-xs font-semibold transition-colors flex items-center justify-between ${
-                    !currentCategory
-                      ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30'
-                      : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                  className="text-[11px] text-[#009B72] hover:underline font-semibold"
+                >
+                  Reset
+                </button>
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <button
+                onClick={() => updateFilter('category', '')}
+                className={`w-full text-left px-3 py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-between ${
+                  !currentCategory
+                    ? 'bg-[#009B72] text-white'
+                    : 'text-[#404040] hover:bg-[#F7F8F8] hover:text-[#151515]'
+                }`}
+              >
+                <span>All Categories</span>
+                <span>({products.length})</span>
+              </button>
+
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => updateFilter('category', cat.slug)}
+                  className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors flex items-center justify-between ${
+                    currentCategory === cat.slug
+                      ? 'bg-[#E8F8F3] text-[#009B72] font-bold border border-[#009B72]/30'
+                      : 'text-[#404040] hover:bg-[#F7F8F8] hover:text-[#151515]'
                   }`}
                 >
-                  <span>All Products</span>
-                  <Layers className="w-3.5 h-3.5 opacity-60" />
+                  <span className="truncate">{cat.name}</span>
+                  {currentCategory === cat.slug && <Check className="w-3.5 h-3.5 text-[#009B72] shrink-0" />}
                 </button>
-              </div>
+              ))}
+            </div>
 
-              {/* Category Tree */}
-              <div className="space-y-1">
-                {categories.map((parent) => (
-                  <div key={parent.id} className="space-y-1">
-                    <button
-                      onClick={() => updateFilter('category', parent.slug)}
-                      className={`w-full text-left px-3 py-2 rounded-xl text-xs font-semibold transition-colors flex items-center justify-between ${
-                        currentCategory === parent.slug
-                          ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-bold'
-                          : 'text-slate-300 hover:bg-slate-800 hover:text-white'
-                      }`}
-                    >
-                      <span>{parent.name}</span>
-                    </button>
-
-                    {/* Subcategories */}
-                    {parent.subcategories && parent.subcategories.length > 0 && (
-                      <div className="pl-3 space-y-1 pt-0.5 pb-1">
-                        {parent.subcategories.map((sub) => (
-                          <button
-                            key={sub.id}
-                            onClick={() => updateFilter('category', sub.slug)}
-                            className={`w-full text-left px-3 py-1.5 rounded-lg text-[11px] transition-colors flex items-center gap-1.5 ${
-                              currentCategory === sub.slug
-                                ? 'bg-cyan-500/20 text-cyan-300 font-bold'
-                                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
-                            }`}
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-slate-600" />
-                            <span>{sub.name}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Special toggles */}
-              <div className="pt-4 border-t border-slate-800 space-y-2">
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Highlights</p>
-                <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer hover:text-white">
-                  <input
-                    type="checkbox"
-                    checked={currentFeatured === 'true'}
-                    onChange={(e) => updateFilter('featured', e.target.checked ? 'true' : '')}
-                    className="rounded bg-slate-950 border-slate-700 text-cyan-500 focus:ring-0"
-                  />
-                  <span>Featured Equipment Only</span>
-                </label>
+            <div className="mt-6 pt-5 border-t border-[#F1F3F5] space-y-3">
+              <div className="p-3 bg-[#E8F8F3] rounded-lg border border-[#009B72]/20">
+                <p className="text-[11px] font-bold text-[#009B72] uppercase">Wholesale Inquiry</p>
+                <p className="text-[11px] text-[#404040] mt-0.5">Need customized installer bulk pricing with NO MOQ?</p>
+                <button
+                  onClick={() => onOpenEnquire && onOpenEnquire()}
+                  className="mt-2 w-full py-1.5 bg-[#009B72] hover:bg-[#007A5A] text-white text-xs font-bold rounded shadow-sm transition-colors"
+                >
+                  Request Quote
+                </button>
               </div>
             </div>
           </aside>
@@ -227,32 +250,31 @@ export default function Products({ onOpenEnquire }) {
           {/* Products Grid */}
           <main className="lg:col-span-3">
             {loading ? (
-              <Loader text="Filtering GS Vision catalogue..." />
+              <div className="py-20 flex justify-center">
+                <Loader />
+              </div>
             ) : products.length === 0 ? (
               <EmptyState
                 title="No Products Found"
-                message="We couldn't find any products matching your active filters. Try searching for a different term or clearing your category filter."
-                action={
-                  <button
-                    onClick={clearAllFilters}
-                    className="px-5 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-xs font-bold transition-colors"
-                  >
-                    Clear All Filters
-                  </button>
-                }
+                description="Try adjusting your search query or selecting a different category from the sidebar."
+                actionLabel="Reset All Filters"
+                onAction={clearAllFilters}
               />
             ) : (
               <div>
-                <div className="flex items-center justify-between text-xs text-slate-400 mb-4 px-1">
-                  <span>Showing <strong>{products.length}</strong> surveillance products</span>
-                  {currentCategory && (
-                    <span className="text-cyan-400">Filtered by category</span>
-                  )}
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-xs text-[#666666] font-medium">
+                    Showing <strong className="text-[#151515] font-bold">{products.length}</strong> items
+                  </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {products.map((p) => (
-                    <ProductCard key={p.id} product={p} onEnquire={(prod) => onOpenEnquire(prod)} />
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+                  {products.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onEnquire={(p) => onOpenEnquire(p)}
+                    />
                   ))}
                 </div>
               </div>
@@ -260,56 +282,6 @@ export default function Products({ onOpenEnquire }) {
           </main>
         </div>
       </div>
-
-      {/* Mobile Filters Drawer */}
-      {mobileFiltersOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/80 backdrop-blur-sm animate-fadeIn">
-          <div className="w-80 max-w-full bg-slate-900 h-full p-6 overflow-y-auto space-y-6">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Filter className="w-4 h-4 text-cyan-400" />
-                <span>Filter Catalogue</span>
-              </h3>
-              <button onClick={() => setMobileFiltersOpen(false)} className="text-slate-400 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-2">
-              <button
-                onClick={() => {
-                  updateFilter('category', '');
-                  setMobileFiltersOpen(false);
-                }}
-                className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-200"
-              >
-                All Products
-              </button>
-              {categories.map((c) => (
-                <button
-                  key={c.id}
-                  onClick={() => {
-                    updateFilter('category', c.slug);
-                    setMobileFiltersOpen(false);
-                  }}
-                  className={`w-full text-left px-3 py-2 rounded-xl text-xs font-semibold ${
-                    currentCategory === c.slug ? 'bg-cyan-500/20 text-cyan-300 font-bold' : 'text-slate-300 hover:bg-slate-800'
-                  }`}
-                >
-                  {c.name}
-                </button>
-              ))}
-            </div>
-
-            <button
-              onClick={() => setMobileFiltersOpen(false)}
-              className="w-full py-2.5 bg-cyan-600 text-white rounded-xl text-xs font-bold"
-            >
-              Apply Filters
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

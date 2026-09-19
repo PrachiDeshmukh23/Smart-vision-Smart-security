@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
   ShieldCheck, Check, MessageSquare, PhoneCall, Download,
-  Share2, ArrowLeft, Layers, Info, Award, HelpCircle
+  Share2, ArrowLeft, Layers, Info, Award, HelpCircle, Sparkles, Truck, PackageCheck
 } from 'lucide-react';
 import api from '../api/axios';
 import PageHeader from '../components/common/PageHeader';
@@ -42,16 +42,16 @@ export default function ProductDetail({ onOpenEnquire }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [slug]);
 
-  if (loading) return <div className="py-20"><Loader text="Loading product specifications..." /></div>;
+  if (loading) return <div className="py-20 bg-[#F7F8F8] min-h-screen flex justify-center"><Loader text="Loading product specifications..." /></div>;
   if (error || !product) {
     return (
       <div className="py-20 max-w-4xl mx-auto px-4">
         <EmptyState
           title="Product Not Found"
-          message="The requested surveillance model could not be found or is no longer listed in the active catalogue."
+          message="The requested CCTV model or accessory could not be found."
           action={
-            <Link to="/products" className="px-6 py-2.5 bg-cyan-600 text-white rounded-xl text-xs font-bold">
-              Return to Products Catalogue
+            <Link to="/products" className="px-6 py-2.5 bg-[#009B72] text-white rounded-lg text-xs font-bold">
+              Return to Catalogue
             </Link>
           }
         />
@@ -61,7 +61,7 @@ export default function ProductDetail({ onOpenEnquire }) {
 
   const handleWhatsApp = () => {
     const phone = (settings?.whatsapp_number || '919876543210').replace(/[^0-9]/g, '');
-    const msg = `Hello GS Vision,\nI am interested in the ${product.name} (Model: ${product.model_number}).\nPlease share full technical specifications and dealer quote.`;
+    const msg = `Hello GS Vision,\nI am interested in "${product.name}" (Model: ${product.model_number || 'N/A'}).\nPlease share wholesale pricing and courier availability.`;
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
@@ -71,200 +71,188 @@ export default function ProductDetail({ onOpenEnquire }) {
   ].filter((item, idx, self) => item.image && self.findIndex(t => t.image === item.image) === idx);
 
   return (
-    <div className="space-y-16 pb-20">
+    <div className="bg-[#F7F8F8] space-y-12 pb-20">
       <PageHeader
         title={product.name}
-        subtitle={`Model Number: ${product.model_number}`}
+        subtitle={`Model Number: ${product.model_number || 'N/A'}`}
         breadcrumbs={[
           { label: 'Products', path: '/products' },
           { label: product.category_name || 'Catalogue', path: `/products?category=${product.category_slug || ''}` },
-          { label: product.model_number }
+          { label: product.model_number || product.name }
         ]}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        {/* Main Product Showcase */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Left: Gallery & Image Previews */}
-          <div className="lg:col-span-6 space-y-4">
-            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 flex items-center justify-center min-h-[380px] sm:min-h-[440px] shadow-2xl relative overflow-hidden">
-              <img
-                src={selectedImage || product.main_image || '/assets/products/placeholder.jpg'}
-                alt={product.name}
-                className="max-h-[360px] max-w-full object-contain drop-shadow-2xl transition-all duration-300"
-              />
-            </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        
+        {/* Main Showcase Section */}
+        <div className="bg-white border border-[#E6E6E6] rounded-2xl p-6 sm:p-8 shadow-card">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            
+            {/* Left: Product Images */}
+            <div className="lg:col-span-6 space-y-4">
+              <div className="bg-[#FAFAFA] border border-[#E6E6E6] rounded-xl p-8 flex items-center justify-center min-h-[340px] sm:min-h-[400px] relative">
+                <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+                  <span className="bg-[#FF5A2C] text-white text-[10px] font-black px-2.5 py-0.5 rounded shadow-xs uppercase tracking-wider">
+                    NO MOQ NEEDED
+                  </span>
+                  {product.is_new && (
+                    <span className="bg-[#009B72] text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-xs flex items-center gap-1">
+                      <Sparkles className="w-3 h-3" /> NEW
+                    </span>
+                  )}
+                </div>
 
-            {/* Thumbnail Row */}
-            {galleryList.length > 1 && (
-              <div className="flex items-center gap-3 overflow-x-auto pb-2">
-                {galleryList.map((item, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImage(item.image)}
-                    className={`w-20 h-20 rounded-2xl bg-slate-900 border p-2 flex items-center justify-center shrink-0 transition-all ${
-                      selectedImage === item.image
-                        ? 'border-cyan-400 ring-2 ring-cyan-500/20 shadow-lg'
-                        : 'border-slate-800 hover:border-slate-700 opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <img src={item.image} alt="Thumb" className="max-h-full max-w-full object-contain" />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Right: Specs & Actions */}
-          <div className="lg:col-span-6 space-y-6">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                {product.category_name && (
-                  <Badge variant="primary" className="font-bold uppercase tracking-wider">
-                    {product.category_name}
-                  </Badge>
-                )}
-                <span className="text-xs font-mono bg-slate-800 text-cyan-300 px-2.5 py-0.5 rounded-md border border-slate-700 font-semibold">
-                  {product.model_number}
-                </span>
+                <img
+                  src={selectedImage || product.main_image || '/assets/products/placeholder.jpg'}
+                  alt={product.name}
+                  className="max-h-[320px] max-w-full object-contain drop-shadow-md transition-all duration-300"
+                />
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-snug">
-                {product.name}
-              </h1>
-
-              {product.short_description && (
-                <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-                  {product.short_description}
-                </p>
+              {/* Thumbnails */}
+              {galleryList.length > 1 && (
+                <div className="flex items-center gap-3 overflow-x-auto pb-1">
+                  {galleryList.map((item, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedImage(item.image)}
+                      className={`w-16 h-16 rounded-lg p-2 bg-[#FAFAFA] border-2 transition-all shrink-0 flex items-center justify-center ${
+                        selectedImage === item.image ? 'border-[#009B72] bg-white shadow-xs' : 'border-[#E6E6E6] hover:border-gray-400'
+                      }`}
+                    >
+                      <img src={item.image} alt="" className="max-h-full max-w-full object-contain" />
+                    </button>
+                  ))}
+                </div>
               )}
             </div>
 
-            {/* Key Features Callout */}
-            <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 space-y-3">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-cyan-400" />
-                <span>Key Hardware Highlights</span>
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {[
-                  'Full HD Colour Night Vision',
-                  'In-Built Sensitive Microphone',
-                  'Universal All-DVR Supported',
-                  'Weatherproof High-Durability Housing'
-                ].map((feat, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs font-medium text-slate-200">
-                    <Check className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                    <span>{feat}</span>
-                  </div>
-                ))}
+            {/* Right: Info & Actions */}
+            <div className="lg:col-span-6 space-y-5">
+              <div>
+                {product.category_name && (
+                  <p className="text-xs font-black text-[#009B72] uppercase tracking-wider mb-1">
+                    {product.category_name}
+                  </p>
+                )}
+                <h1 className="text-2xl sm:text-3xl font-black text-[#151515] leading-snug">
+                  {product.name}
+                </h1>
+                <div className="mt-2 flex items-center gap-3">
+                  <span className="text-xs font-mono font-bold bg-[#F1F3F5] text-[#404040] px-2.5 py-1 rounded border border-[#E6E6E6]">
+                    SKU: {product.model_number || 'N/A'}
+                  </span>
+                  <span className="text-xs text-[#009B72] font-semibold flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5" /> In Stock &amp; Ready to Ship
+                  </span>
+                </div>
               </div>
-            </div>
 
-            {/* CTA Buttons */}
-            <div className="pt-2 space-y-3">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {product.short_description && (
+                <p className="text-sm text-[#666666] leading-relaxed">
+                  {product.short_description}
+                </p>
+              )}
+
+              {/* CCTV PRO Value Badges */}
+              <div className="grid grid-cols-2 gap-3 py-3 border-y border-[#F1F3F5]">
+                <div className="flex items-center gap-2 text-xs text-[#151515]">
+                  <PackageCheck className="w-4 h-4 text-[#009B72] shrink-0" />
+                  <span><strong>No MOQ:</strong> Order 1 or 100+</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-[#151515]">
+                  <Truck className="w-4 h-4 text-[#009B72] shrink-0" />
+                  <span><strong>Courier:</strong> Pan-India Dispatch</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-[#151515]">
+                  <ShieldCheck className="w-4 h-4 text-[#009B72] shrink-0" />
+                  <span><strong>Warranty:</strong> Manufacturer Covered</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-[#151515]">
+                  <Award className="w-4 h-4 text-[#009B72] shrink-0" />
+                  <span><strong>Quality:</strong> 100% Tested Hardware</span>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <button
                   onClick={() => onOpenEnquire && onOpenEnquire(product)}
-                  className="w-full py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 transition-all shadow-xl shadow-cyan-500/20 flex items-center justify-center gap-2"
+                  className="flex-1 py-3 px-5 text-center text-xs sm:text-sm font-bold text-white bg-[#009B72] hover:bg-[#007A5A] rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  <span>Enquire / Request Quote</span>
+                  <span>Request Official Quotation</span>
                 </button>
 
                 <button
                   onClick={handleWhatsApp}
-                  className="w-full py-3.5 rounded-xl font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/20 flex items-center justify-center gap-2"
+                  className="py-3 px-5 text-center text-xs sm:text-sm font-bold text-[#009B72] bg-[#E8F8F3] hover:bg-[#009B72] hover:text-white border border-[#009B72]/30 rounded-xl transition-all flex items-center justify-center gap-2"
                 >
                   <PhoneCall className="w-4 h-4" />
-                  <span>WhatsApp Inquiry</span>
+                  <span>Order on WhatsApp</span>
                 </button>
               </div>
 
-              {product.brochure && (
-                <a
-                  href={product.brochure}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-full py-3 rounded-xl font-semibold text-xs text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center gap-2 transition-colors"
-                >
-                  <Download className="w-4 h-4 text-cyan-400" />
-                  <span>Download Product Datasheet / PDF Brochure</span>
-                </a>
+              {product.datasheet_url && (
+                <div className="pt-2">
+                  <a
+                    href={product.datasheet_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-[#009B72] hover:underline"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>Download Technical Datasheet (PDF)</span>
+                  </a>
+                </div>
               )}
             </div>
           </div>
         </div>
 
-        {/* Technical Specification Table */}
-        <section className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 space-y-6">
-          <div className="border-b border-slate-800 pb-4">
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <Layers className="w-5 h-5 text-cyan-400" />
+        {/* Technical Specifications Section */}
+        {product.specifications && product.specifications.length > 0 && (
+          <div className="bg-white border border-[#E6E6E6] rounded-2xl p-6 sm:p-8 shadow-card space-y-6">
+            <h2 className="text-xl font-black text-[#151515] tracking-tight pb-3 border-b border-[#F1F3F5] flex items-center gap-2">
+              <Layers className="w-5 h-5 text-[#009B72]" />
               <span>Technical Specifications</span>
-            </h3>
-            <p className="text-xs text-slate-400 mt-1">
-              Detailed optical, electronic, and mechanical characteristics for {product.model_number}.
-            </p>
-          </div>
+            </h2>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-slate-800 text-xs font-bold text-slate-400 uppercase tracking-wider bg-slate-950/40">
-                  <th className="py-3 px-4 w-1/3">Specification Field</th>
-                  <th className="py-3 px-4">Value / Parameter</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800/60 text-sm">
-                <tr className="hover:bg-slate-800/30">
-                  <td className="py-3 px-4 font-semibold text-slate-300">Model Number</td>
-                  <td className="py-3 px-4 font-mono text-cyan-300 font-bold">{product.model_number}</td>
-                </tr>
-                <tr className="hover:bg-slate-800/30">
-                  <td className="py-3 px-4 font-semibold text-slate-300">Category</td>
-                  <td className="py-3 px-4 text-slate-200">{product.category_name || 'CCTV & Surveillance'}</td>
-                </tr>
-                {product.specifications && product.specifications.map((spec, idx) => (
-                  <tr key={idx} className="hover:bg-slate-800/30">
-                    <td className="py-3 px-4 font-semibold text-slate-300">{spec.specification_name}</td>
-                    <td className="py-3 px-4 text-slate-200">{spec.specification_value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="overflow-hidden border border-[#E6E6E6] rounded-xl">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <tbody>
+                  {product.specifications.map((s, idx) => (
+                    <tr
+                      key={idx}
+                      className={idx % 2 === 0 ? 'bg-[#F7F8F8]' : 'bg-white'}
+                    >
+                      <td className="py-3 px-4 font-bold text-[#151515] w-1/3 border-r border-[#E6E6E6]">
+                        {s.specification_name}
+                      </td>
+                      <td className="py-3 px-4 text-[#404040]">
+                        {s.specification_value}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </section>
+        )}
 
-        {/* Full Long Description */}
+        {/* Full Description & Features */}
         {product.description && (
-          <section className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 sm:p-10 space-y-4">
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <Info className="w-5 h-5 text-cyan-400" />
-              <span>Product Overview & Details</span>
-            </h3>
-            <div className="text-sm sm:text-base text-slate-300 leading-relaxed whitespace-pre-line">
+          <div className="bg-white border border-[#E6E6E6] rounded-2xl p-6 sm:p-8 shadow-card space-y-4">
+            <h2 className="text-xl font-black text-[#151515] tracking-tight pb-3 border-b border-[#F1F3F5] flex items-center gap-2">
+              <Info className="w-5 h-5 text-[#009B72]" />
+              <span>Product Overview</span>
+            </h2>
+            <div className="text-xs sm:text-sm text-[#404040] leading-relaxed whitespace-pre-line">
               {product.description}
             </div>
-          </section>
+          </div>
         )}
 
-        {/* Related Products */}
-        {product.related_products && product.related_products.length > 0 && (
-          <section className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h3 className="text-2xl font-bold text-white">Related Products</h3>
-              <Link to="/products" className="text-xs font-bold text-cyan-400 hover:text-cyan-300">
-                View All
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {product.related_products.map((rel) => (
-                <ProductCard key={rel.id} product={rel} onEnquire={(p) => onOpenEnquire(p)} />
-              ))}
-            </div>
-          </section>
-        )}
       </div>
     </div>
   );
