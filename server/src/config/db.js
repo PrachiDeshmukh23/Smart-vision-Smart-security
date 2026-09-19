@@ -161,38 +161,45 @@ const memoryDB = {
 
     // Cameras & Recorders
     {
-      id: 16, category_id: 2, brand_id: 1, name: 'GS Vision 1080P Full HD Colour Night Vision Bullet Camera', slug: 'gs-vision-1080p-full-hd-colour-night-vision-bullet-camera',
-      model_number: 'GS-B1080-CV', short_description: 'Full HD 1080P Colour Vision with 3.6mm Lens, In-Built Audio Mic, and universal DVR/Cloud support.',
-      description: 'Original GS Vision high-definition bullet camera featuring full color night vision, sensitive audio recording, and all-weather IP66 housing. Fully compatible with all DVR brands.',
-      main_image: '/assets/products/gs-vision-collection.png', price: 1250.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      id: 16, category_id: 2, brand_id: 1, name: 'GS Vision Security Camera Collection (Dome & Bullet 1080P Colour Vision)', slug: 'gs-vision-security-camera-collection-dome-bullet',
+      model_number: 'GS-COLLECTION-1080P', short_description: 'Full HD 1080P Colour Vision with 3.6mm Lens, In-Built Audio Mic, and All DVR / Cloud Supported.',
+      description: 'GS Vision Security Camera Collection. Your trusted source for smart security. Available in dome and bullet models with 1080P Full HD Colour Night Vision, 3.6mm optical lens, in-built sensitive microphone, and universal cloud/DVR compatibility. Grand Offer: 50 Combo Purchases = 1 Free Cycle!',
+      main_image: '/assets/products/gs-vision-dome-bullet-collection.png', price: 1250.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
       status: 'active', brochure: null, created_at: new Date()
     },
     {
-      id: 17, category_id: 2, brand_id: 1, name: 'GS Vision 1080P Full HD Colour Night Vision Dome Camera', slug: 'gs-vision-1080p-full-hd-colour-night-vision-dome-camera',
-      model_number: 'GS-D1080-CV', short_description: 'Indoor/Outdoor Dome with 1080P Colour Vision, 3.6mm Lens, In-Built Audio Mic, and multi-DVR compatibility.',
-      description: 'Original GS Vision compact dome camera engineered for crystal-clear night vision optical performance, wide-angle 3.6mm lens, and sensitive integrated microphone.',
-      main_image: '/assets/products/gs-vision-collection.png', price: 1150.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      id: 17, category_id: 2, brand_id: 1, name: 'GS Vision 3MP Resolution HD Bullet Camera (8MM Optical Lens)', slug: 'gs-vision-3mp-resolution-hd-bullet-camera-8mm',
+      model_number: 'GS-B3MP-8MM', short_description: 'Triple Multi-Angle Array 3MP HD Bullet Camera with 8MM long-range lens, in-built mic, and high power night vision.',
+      description: 'Smart Vision.. Smart Security. High-power 3MP HD Bullet Camera equipped with an 8MM long-range focal lens, 4-LED high-output night vision array, embedded sensitive audio microphone, and all DVR compatibility.',
+      main_image: '/assets/products/gs-vision-3mp-8mm-bullet-camera.png', price: 1450.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
       status: 'active', brochure: null, created_at: new Date()
     },
     {
       id: 18, category_id: 12, brand_id: 1, name: 'Active Pixel G24 4G 10X Zoom Solar PTZ Camera (3-Lens Screen)', slug: 'active-pixel-g24-4g-10x-zoom-solar-ptz-camera',
-      model_number: 'AP-G24-4G', short_description: '4G Solar PTZ Camera with 10X Optical Zoom and 3-Lens Screen simultaneous multi-angle view.',
+      model_number: 'AP-G24-4G-3LENS', short_description: 'One Camera 3 Lens Screen with 10X Zoom, 4G LTE SIM connectivity, and continuous solar power.',
       description: 'Active Pixel G24 safety made easier. Wire-free 4G SIM solar camera with 10X zoom, 3-lens multi-screen live view, humanoid PIR motion tracking, and high efficiency solar battery.',
-      main_image: '/assets/products/solar-ptz-3lens.jpg', price: 4200.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      main_image: '/assets/products/active-pixel-g24-solar-ptz.jpg', price: 4200.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
       status: 'active', brochure: null, created_at: new Date()
     },
     {
-      id: 19, category_id: 2, brand_id: 1, name: 'GS Vision Complete 4-Camera CCTV Setup Package (+ Free 4G Router)', slug: 'gs-vision-complete-4-camera-cctv-setup-package',
+      id: 19, category_id: 9, brand_id: 1, name: 'Soltrix SMC002 10/100/1000M Gigabit Fiber Media Converter', slug: 'soltrix-smc002-gigabit-fiber-media-converter',
+      model_number: 'SMC002-GIGA', short_description: 'Upgrade to Fiber Speed with Soltrix 10/100/1000M GIGA media converter for CCTV and networking projects.',
+      description: 'Soltrix X - Built by Soltrix, Trusted Worldwide. Reliable, high-speed industrial-grade networking solution. Single Mode & Multi Mode support, plug & play installation, stable and secure data conversion. Made in Bharat.',
+      main_image: '/assets/products/soltrix-giga-media-converter.png', price: 850.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 20, category_id: 4, brand_id: 1, name: 'Soltrix Gladiator Series Heavy Metal CCTV SMPS Power Supply', slug: 'soltrix-gladiator-series-metal-cctv-smps',
+      model_number: 'SGL001-SGL002', short_description: 'Gladiator Series Power Wrapped in Metal - Available in 4 Channel (SGL001) & 8 Channel (SGL002).',
+      description: 'One power solution compatible with all major CCTV cameras. Features heavy-duty metal casing, multi-ventilation cooling holes, wired output for easier installation, AC power input, and BIS certification. Made in Bharat.',
+      main_image: '/assets/products/soltrix-gladiator-metal-smps.png', price: 650.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 21, category_id: 2, brand_id: 1, name: 'GS Vision Complete 4-Camera CCTV Setup Package (+ Free 4G Router)', slug: 'gs-vision-complete-4-camera-cctv-setup-package',
       model_number: 'GS-COMBO-4CAM', short_description: 'Complete 4-Camera HD setup with night vision, 24x7 recording, mobile view, 1-year warranty, and a FREE 4G Router included.',
       description: 'All-in-one surveillance setup for homes and businesses across Maharashtra. Includes 4 Full HD cameras, DVR recorder, surveillance storage, SMPS power supply, connectors, cables, and a FREE 4G Router. Special Price ₹15,999 (Regular ₹19,999).',
       main_image: '/assets/banners/cctv-setup-offer.png', price: 15999.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
-      status: 'active', brochure: null, created_at: new Date()
-    },
-    {
-      id: 20, category_id: 11, brand_id: 1, name: 'GS Vision 16-Channel 4K AI PoE Network Video Recorder', slug: 'gs-vision-16-channel-4k-ai-poe-nvr',
-      model_number: 'GS-NVR16-4K-16P', short_description: '16Ch 4K NVR with 16 built-in independent PoE ports and dual SATA bays up to 20TB.',
-      description: 'Plug-and-play NVR supporting up to 16 IP cameras with integrated PoE switches. Advanced AI face detection and smart perimeter tracking.',
-      main_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80', price: 8500.00, show_price: 1, featured: 1, is_new: 0, stock_status: 'in_stock',
       status: 'active', brochure: null, created_at: new Date()
     }
   ],
@@ -201,18 +208,23 @@ const memoryDB = {
     { id: 2, product_id: 16, specification_name: 'Lens', specification_value: '3.6 MM Optical Glass', sort_order: 2 },
     { id: 3, product_id: 16, specification_name: 'Audio', specification_value: 'In-Built Sensitive Microphone', sort_order: 3 },
     { id: 4, product_id: 16, specification_name: 'DVR Compatibility', specification_value: 'All DVR / Cloud Supported', sort_order: 4 },
-    { id: 5, product_id: 18, specification_name: 'Optical Zoom', specification_value: '10X Optical Zoom', sort_order: 1 },
-    { id: 6, product_id: 18, specification_name: 'Lens Screen', specification_value: 'One Camera 3 Lens Screen View', sort_order: 2 },
-    { id: 7, product_id: 18, specification_name: 'Connectivity', specification_value: '4G LTE SIM Card + Solar Powered', sort_order: 3 }
+    { id: 5, product_id: 17, specification_name: 'Resolution', specification_value: '3MP High Definition', sort_order: 1 },
+    { id: 6, product_id: 17, specification_name: 'Lens', specification_value: '8 MM Long-Range Focal Lens', sort_order: 2 },
+    { id: 7, product_id: 18, specification_name: 'Optical Zoom', specification_value: '10X Optical Zoom', sort_order: 1 },
+    { id: 8, product_id: 18, specification_name: 'Lens Screen', specification_value: 'One Camera 3 Lens Screen View', sort_order: 2 },
+    { id: 9, product_id: 18, specification_name: 'Connectivity', specification_value: '4G LTE SIM Card + Solar Powered', sort_order: 3 },
+    { id: 10, product_id: 19, specification_name: 'Speed', specification_value: '10/100/1000M Gigabit GIGA', sort_order: 1 },
+    { id: 11, product_id: 20, specification_name: 'Channels', specification_value: '4 Channel & 8 Channel Options', sort_order: 1 }
   ],
   product_images: [],
   banners: [
-    { id: 1, title: 'GS Vision CCTV & Smart Security Collection', subtitle: 'Commercial CCTV Project Specialists • Installation & Support Across Maharashtra • Mo. 8308209470', button_text: 'View Camera Collection', button_link: '/products', display_order: 1, is_active: 1, image_url: '/assets/products/gs-vision-collection.png' },
-    { id: 2, title: 'Active Pixel G24 4G 10X Zoom Solar PTZ Camera', subtitle: 'One Camera 3-Lens Screen View • 10X Zoom • Wire-Free Solar Powered Security Anywhere', button_text: 'Explore Solar Camera', button_link: '/products/active-pixel-g24-4g-10x-zoom-solar-ptz-camera', display_order: 2, is_active: 1, image_url: '/assets/products/solar-ptz-3lens.jpg' },
-    { id: 3, title: 'Complete 4-Camera Setup @ ₹15,999 (Was ₹19,999)', subtitle: 'High Definition Video • Night Vision • Mobile Live View • 24x7 Recording • FREE 4G Router Included!', button_text: 'Order 4-Cam Setup', button_link: '/products/gs-vision-complete-4-camera-cctv-setup-package', display_order: 3, is_active: 1, image_url: '/assets/banners/cctv-setup-offer.png' }
+    { id: 1, title: 'GS Vision CCTV & Smart Security Collection', subtitle: 'Commercial CCTV Project Specialists • Installation & Support Across Maharashtra • Mo. 8308209470', button_text: 'View Camera Collection', button_link: '/products', display_order: 1, is_active: 1, image_url: '/assets/products/gs-vision-dome-bullet-collection.png' },
+    { id: 2, title: 'Active Pixel G24 4G 10X Zoom Solar PTZ Camera', subtitle: 'One Camera 3-Lens Screen View • 10X Zoom • Wire-Free Solar Powered Security Anywhere', button_text: 'Explore Solar Camera', button_link: '/products/active-pixel-g24-4g-10x-zoom-solar-ptz-camera', display_order: 2, is_active: 1, image_url: '/assets/products/active-pixel-g24-solar-ptz.jpg' },
+    { id: 3, title: 'GS Vision 3MP HD Bullet Camera (8MM Long-Range Lens)', subtitle: 'Full HD Colour Vision • In-Built Mic • High-Power Night Vision • All DVR Supported', button_text: 'View 3MP Camera', button_link: '/products/gs-vision-3mp-resolution-hd-bullet-camera-8mm', display_order: 3, is_active: 1, image_url: '/assets/products/gs-vision-3mp-8mm-bullet-camera.png' },
+    { id: 4, title: 'Soltrix Gladiator Metal SMPS & Gigabit Media Converters', subtitle: 'Heavy Duty Metal Casing • BIS Certified • Made in Bharat', button_text: 'Explore Power & Networking', button_link: '/products', display_order: 4, is_active: 1, image_url: '/assets/products/soltrix-gladiator-metal-smps.png' }
   ],
   offers: [
-    { id: 1, title: 'GRAND OFFER: 50 Combo Purchases = 1 Free Cycle!', description: 'Exclusive installer & dealer reward program! Purchase 50 GS Vision Camera Combos and receive a high-performance bicycle completely FREE.', discount_percentage: 25.00, coupon_code: 'FREECYCLE50', is_active: 1, image_url: '/assets/products/gs-vision-collection.png' },
+    { id: 1, title: 'GRAND OFFER: 50 Combo Purchases = 1 Free Cycle!', description: 'Exclusive installer & dealer reward program! Purchase 50 GS Vision Camera Combos and receive a high-performance bicycle completely FREE.', discount_percentage: 25.00, coupon_code: 'FREECYCLE50', is_active: 1, image_url: '/assets/products/gs-vision-dome-bullet-collection.png' },
     { id: 2, title: '4-Camera Complete Setup: ₹15,999 (Was ₹19,999) + FREE 4G Router', description: 'Special promotional package for homes and shops across Maharashtra. Includes 4 cameras, DVR, recording HDD, power supply, and a FREE 4G Router!', discount_percentage: 20.00, coupon_code: 'ROUTERFREE', is_active: 1, image_url: '/assets/banners/cctv-setup-offer.png' }
   ],
   enquiries: [],
