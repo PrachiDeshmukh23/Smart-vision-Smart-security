@@ -50,15 +50,13 @@ export default function AdminSidebar({ mobileOpen, setMobileOpen }) {
       >
         <div>
           {/* Logo */}
-          <div className="p-5 border-b border-slate-800/80 flex items-center justify-between">
-            <Link to="/admin/dashboard" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-cyan-400 flex items-center justify-center text-white font-bold text-sm">
-                GS
-              </div>
-              <div>
-                <span className="font-extrabold text-white text-base">GS Vision</span>
-                <span className="text-[10px] text-cyan-400 block font-mono font-semibold">ADMIN PORTAL</span>
-              </div>
+          <div className="p-4 border-b border-slate-800/80 flex items-center justify-between">
+            <Link to="/admin/dashboard" className="flex items-center gap-2">
+              <img
+                src="/assets/logo-white.png"
+                alt="GS Vision Admin"
+                className="h-10 w-auto object-contain"
+              />
             </Link>
             <button onClick={() => setMobileOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
               <X className="w-5 h-5" />

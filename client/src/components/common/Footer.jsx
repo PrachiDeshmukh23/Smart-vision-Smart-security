@@ -15,14 +15,12 @@ export default function Footer({ onOpenEnquire }) {
           
           {/* Company Brand Column */}
           <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="flex items-center gap-3">
-              <div className="bg-white p-2 rounded-xl inline-block shadow-sm">
-                <img
-                  src="/assets/logo.png"
-                  alt="GS Vision"
-                  className="h-9 w-auto object-contain"
-                />
-              </div>
+            <Link to="/" className="inline-block group">
+              <img
+                src="/assets/logo-white.png"
+                alt="GS Vision"
+                className="h-14 sm:h-16 w-auto object-contain drop-shadow-md group-hover:scale-105 transition-transform"
+              />
             </Link>
             
             <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-md">

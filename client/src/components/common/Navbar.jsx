@@ -144,11 +144,11 @@ export default function Navbar({ onOpenEnquire }) {
       <div className="bg-white border-b border-[#E6E6E6] py-3.5 sm:py-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 lg:gap-8">
           {/* Official GS Vision Logo */}
-          <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
+          <Link to="/" className="flex items-center shrink-0 group py-1">
             <img
               src="/assets/logo.png"
-              alt="GS Vision"
-              className="h-10 sm:h-12 w-auto object-contain drop-shadow-xs group-hover:scale-105 transition-transform"
+              alt="GS Vision - Smart Vision.. Smart Security"
+              className="h-12 sm:h-16 md:h-18 lg:h-20 w-auto max-h-[82px] object-contain transition-transform group-hover:scale-105"
             />
           </Link>
 
@@ -328,6 +328,17 @@ export default function Navbar({ onOpenEnquire }) {
       {/* 5. Mobile Drawer Navigation */}
       {isOpen && (
         <div className="lg:hidden border-t border-[#E6E6E6] bg-white px-4 pt-3 pb-6 space-y-3 shadow-xl animate-fadeIn">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E6E6E6]">
+            <img
+              src="/assets/logo.png"
+              alt="GS Vision"
+              className="h-12 w-auto object-contain"
+            />
+            <span className="text-[10px] font-bold text-[#009B72] bg-[#E8F8F3] px-2.5 py-1 rounded-full border border-[#009B72]/20">
+              Smart Vision.. Smart Security
+            </span>
+          </div>
+
           <div className="space-y-1">
             <div className="text-[11px] font-bold text-[#666666] uppercase px-3 pt-1">
               Menu
