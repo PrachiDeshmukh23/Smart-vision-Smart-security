@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Shield, Video, Cpu, Radio, Zap, Network, HardDrive, Wrench,
@@ -150,31 +150,56 @@ export default function Home({ onOpenEnquire }) {
 
           {/* Circular Category Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 sm:gap-8">
-            {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                to={`/products?category=${cat.slug}`}
-                className="group flex flex-col items-center text-center"
-              >
-                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#F7F8F8] group-hover:bg-white border-2 border-[#E6E6E6] group-hover:border-[#009B72] shadow-sm group-hover:shadow-md transition-all duration-300 flex items-center justify-center p-4 mb-3 group-hover:-translate-y-1">
-                  <img
-                    src={cat.image_url || '/assets/categories/cctv.png'}
-                    alt={cat.name}
-                    className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = '/assets/products/placeholder.jpg';
-                    }}
-                  />
-                </div>
-                <h3 className="text-xs sm:text-sm font-bold text-[#151515] group-hover:text-[#009B72] transition-colors line-clamp-2 px-1">
-                  {cat.name}
-                </h3>
-                <span className="text-[10px] text-[#8C8C8C] mt-0.5 group-hover:text-[#009B72] transition-colors">
-                  Explore &rarr;
-                </span>
-              </Link>
-            ))}
+            {categories.map((cat) => {
+              const categoryImages = {
+                'ip-cameras': '/assets/categories/ip-cam.jpg',
+                'hd-cctv-cameras': '/assets/categories/hd-cam.jpg',
+                'bullet-cameras': '/assets/categories/hd-cam.jpg',
+                'dome-cameras': '/assets/categories/ip-cam.jpg',
+                'connectors': '/assets/categories/connectors.jpg',
+                'power-supply': '/assets/categories/power.jpg',
+                'power-supplies': '/assets/categories/power.jpg',
+                'junction-box': '/assets/categories/junction.jpg',
+                'junction-boxes': '/assets/categories/junction.jpg',
+                'rack': '/assets/categories/rack.jpg',
+                'recorders-racks': '/assets/categories/rack.jpg',
+                'cables': '/assets/categories/cables.jpg',
+                'stand': '/assets/categories/stand.jpg',
+                'extender-splitter': '/assets/categories/extender.jpg',
+                'tools': '/assets/categories/tools.jpg',
+                'nvr': '/assets/categories/nvr.jpg',
+                'smart-wifi-cameras': '/assets/categories/wifi-cam.jpg',
+                'solar-ptz-cameras': '/assets/categories/wifi-cam.jpg'
+              };
+
+              const imgSrc = cat.image_url || categoryImages[cat.slug] || '/assets/products/gs-vision-collection.png';
+
+              return (
+                <Link
+                  key={cat.id || cat.slug}
+                  to={`/products?category=${cat.slug}`}
+                  className="group flex flex-col items-center text-center"
+                >
+                  <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white group-hover:bg-[#E8F8F3] border-2 border-[#E6E6E6] group-hover:border-[#009B72] shadow-sm group-hover:shadow-md transition-all duration-300 flex items-center justify-center p-3.5 mb-3 group-hover:-translate-y-1 relative overflow-hidden">
+                    <img
+                      src={imgSrc}
+                      alt={cat.name}
+                      className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-xs"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/assets/products/gs-vision-collection.png';
+                      }}
+                    />
+                  </div>
+                  <h3 className="text-xs sm:text-sm font-bold text-[#151515] group-hover:text-[#009B72] transition-colors line-clamp-2 px-1">
+                    {cat.name}
+                  </h3>
+                  <span className="text-[10px] text-[#8C8C8C] mt-0.5 group-hover:text-[#009B72] transition-colors">
+                    Explore &rarr;
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </section>
 
