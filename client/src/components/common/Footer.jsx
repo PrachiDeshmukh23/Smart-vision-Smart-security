@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, MapPin, Phone, Mail, Clock, ChevronRight, PhoneCall, Truck } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
@@ -16,22 +16,17 @@ export default function Footer({ onOpenEnquire }) {
           {/* Company Brand Column */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#009B72] flex items-center justify-center text-white shadow-md">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5 leading-none">
-                  <span className="text-2xl font-black text-white">GS</span>
-                  <span className="text-2xl font-black text-[#009B72]">VISION</span>
-                </div>
-                <p className="text-[10px] tracking-wider text-gray-400 uppercase font-semibold mt-0.5">
-                  Smart Vision.. Smart Security
-                </p>
+              <div className="bg-white p-2 rounded-xl inline-block shadow-sm">
+                <img
+                  src="/assets/logo.png"
+                  alt="GS Vision"
+                  className="h-9 w-auto object-contain"
+                />
               </div>
             </Link>
             
             <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-md">
-              {settings?.about_short || 'GS Vision is a premier security camera, CCTV surveillance hardware, and networking accessories company, providing high-reliability surveillance cameras, SMPS power supplies, racks, and accessories with NO MOQ.'}
+              {settings?.about_short || 'GS Vision (GS Enterprises) is a premier CCTV surveillance, security camera manufacturer & accessories wholesaler located at Orange Corner, Sangamner (Ahilyanagar, Maharashtra). Specialists in commercial CCTV projects, wholesale accessories with NO MOQ, and pan-India express dispatch.'}
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-3">

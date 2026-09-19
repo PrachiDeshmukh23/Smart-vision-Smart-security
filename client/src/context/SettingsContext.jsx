@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+﻿import React, { createContext, useContext, useState, useEffect } from 'react';
 import api from '../api/axios';
 
 const SettingsContext = createContext();
@@ -6,16 +6,21 @@ const SettingsContext = createContext();
 export function SettingsProvider({ children }) {
   const [settings, setSettings] = useState({
     company_name: 'GS Vision',
-    tagline: 'Smart Vision.. Smart Security',
-    phone: '+91 98765 43210',
-    secondary_phone: '+91 98765 43211',
+    tagline: 'Commercial CCTV Project Specialists | Installation & Support Across Maharashtra',
+    owner_name: 'Sagar Gupta',
+    phone: '+91 83082 09470',
+    secondary_phone: '+91 83082 09470',
     email: 'sales@gsvision.com',
-    support_email: 'support@gsvision.com',
-    whatsapp_number: '919876543210',
-    address: 'Plot No. 45, Industrial Area, Electronic City, Phase II, New Delhi - 110020, India',
-    business_hours: 'Monday - Saturday: 9:30 AM - 7:00 PM',
-    map_embed_url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.562063836371!2d77.2189912!3d28.6128492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM2JzQ2LjMiTiA3N8KwMTMnMDguNCJF!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin',
-    about_short: 'GS Vision is a pioneering manufacturer and provider of premier CCTV surveillance systems, smart cameras, networking infrastructure, and security accessories.'
+    support_email: 'contact@gsvision.com',
+    whatsapp_number: '918308209470',
+    address: 'Orange Corner, Sangamner, Dist. Ahilyanagar, Maharashtra - 422605',
+    city: 'Sangamner',
+    state: 'Maharashtra',
+    pincode: '422605',
+    instagram_url: 'https://www.instagram.com/gs_enterprises_security',
+    business_hours: 'Monday - Saturday: 9:30 AM - 7:30 PM',
+    logo_url: '/assets/logo.png',
+    about_short: 'GS Vision (GS Enterprises) is a premier CCTV surveillance, security camera manufacturer & accessories wholesaler located at Orange Corner, Sangamner (Ahilyanagar, Maharashtra). Specialists in commercial CCTV projects, wholesale accessories with NO MOQ, and pan-India express dispatch.'
   });
   const [loading, setLoading] = useState(true);
 
@@ -23,10 +28,10 @@ export function SettingsProvider({ children }) {
     try {
       const res = await api.get('/settings');
       if (res.data.success && res.data.settings) {
-        setSettings(res.data.settings);
+        setSettings(prev => ({ ...prev, ...res.data.settings }));
       }
     } catch (err) {
-      console.warn('Could not load dynamic settings, using defaults');
+      console.warn('Using default GS Vision actual business settings');
     } finally {
       setLoading(false);
     }

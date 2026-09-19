@@ -143,20 +143,13 @@ export default function Navbar({ onOpenEnquire }) {
       {/* 3. Main Brand Header with Centered Search */}
       <div className="bg-white border-b border-[#E6E6E6] py-3.5 sm:py-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 lg:gap-8">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 shrink-0 group">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#009B72] flex items-center justify-center text-white shadow-md group-hover:bg-[#007A5A] transition-colors">
-              <ShieldCheck className="w-6 h-6 sm:w-7 sm:h-7" />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5 leading-none">
-                <span className="text-2xl sm:text-[26px] font-black tracking-tight text-[#151515]">GS</span>
-                <span className="text-2xl sm:text-[26px] font-black tracking-tight text-[#009B72]">VISION</span>
-              </div>
-              <p className="text-[10px] tracking-wide text-[#666666] uppercase font-semibold mt-0.5">
-                Smart Vision.. Smart Security
-              </p>
-            </div>
+          {/* Official GS Vision Logo */}
+          <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
+            <img
+              src="/assets/logo.png"
+              alt="GS Vision"
+              className="h-10 sm:h-12 w-auto object-contain drop-shadow-xs group-hover:scale-105 transition-transform"
+            />
           </Link>
 
           {/* Desktop Search Bar (450px - 600px) */}
