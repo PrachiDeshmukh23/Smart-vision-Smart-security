@@ -315,6 +315,17 @@ const memoryDB = {
       main_image: '/assets/products/gs-vision-smart-poe-switch-8plus2.png',
       price: 1650.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
       status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 32, category_id: 2, brand_id: 1,
+      name: 'GS Vision Security Camera Collection — Dome & Bullet Models (Grand Offer)',
+      slug: 'gs-vision-security-camera-collection-dome-bullet-grand-offer',
+      model_number: 'GS-COLLECTION-DB',
+      short_description: 'GS Vision Dome & Bullet Collection — Full HD 1080P Colour Vision, 3.6MM Lens, In-Built Mic, All DVR/Cloud Supported. GRAND OFFER: 50 Combos = 1 Free Cycle!',
+      description: 'GS Vision Security Camera Collection — Your Trusted Source for Smart Security. Available in Dome & Bullet models. Features: 1080P Full HD Colour Vision, 3.6MM Lens, In-Built Microphone, All DVR/Cloud Supported. GRAND OFFER: Purchase 50 Combo Sets and receive 1 FREE Bicycle! Buy Now & Get Your Free Cycle! Visit www.gsvision.com or Call Us Today.',
+      main_image: '/assets/products/gs-vision-security-camera-collection-dome-bullet-offer.png',
+      price: 1250.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
     }
   ],
   product_specifications: [
@@ -359,7 +370,7 @@ const memoryDB = {
   ],
   product_images: [],
   banners: [
-    { id: 1, title: 'GS Vision CCTV & Smart Security Collection', subtitle: 'Commercial CCTV Project Specialists • Installation & Support Across Maharashtra • Mo. 8308209470', button_text: 'View Camera Collection', button_link: '/products', display_order: 1, is_active: 1, image_url: '/assets/products/gs-vision-dome-bullet-collection.png' },
+    { id: 1, title: 'GS Vision Security Camera Collection — Dome & Bullet Models', subtitle: '🎁 GRAND OFFER: 50 Combo Purchases = 1 FREE Cycle! • Full HD 1080P • In-Built Mic • All DVR/Cloud Supported', button_text: '🚲 Claim Grand Offer', button_link: '/products/gs-vision-security-camera-collection-dome-bullet-grand-offer', display_order: 1, is_active: 1, image_url: '/assets/products/gs-vision-security-camera-collection-dome-bullet-offer.png' },
     { id: 2, title: 'GS Vision 3MP HD Bullet Camera — 8MM Long-Range Lens', subtitle: '1080P Full HD Colour Vision • In-Built Mic • High-Power Night Vision • All DVR Supported', button_text: 'View Bullet Camera', button_link: '/products/gs-vision-3mp-hd-bullet-camera-8mm-colour-night-vision', display_order: 2, is_active: 1, image_url: '/assets/products/gs-vision-3mp-bullet-camera-8mm.png' },
     { id: 3, title: 'GS Vision 3MP Fisheye Bullet Camera — Wide-Angle Coverage', subtitle: '1080P Full HD Colour Vision • 3.6MM Fisheye Lens • In-Built Mic • Night Vision', button_text: 'View Fisheye Bullet', button_link: '/products/gs-vision-3mp-hd-fisheye-bullet-camera-3-6mm', display_order: 3, is_active: 1, image_url: '/assets/products/gs-vision-3mp-fisheye-bullet-camera.png' },
     { id: 4, title: 'GS Vision 3MP Dome Fisheye Camera — Ceiling & Corner Mount', subtitle: '1080P Full HD Colour Vision • 3.6MM Fisheye Dome Lens • IR Night Vision • All DVR Supported', button_text: 'View Dome Fisheye', button_link: '/products/gs-vision-3mp-hd-dome-fisheye-camera-3-6mm', display_order: 4, is_active: 1, image_url: '/assets/products/gs-vision-3mp-dome-fisheye-camera.png' },
@@ -369,7 +380,7 @@ const memoryDB = {
     { id: 8, title: 'Soltrix Gladiator Metal SMPS & Gigabit Media Converters', subtitle: 'Heavy Duty Metal Casing • BIS Certified • Made in Bharat', button_text: 'Explore Power & Networking', button_link: '/products', display_order: 8, is_active: 1, image_url: '/assets/products/soltrix-gladiator-metal-smps.png' }
   ],
   offers: [
-    { id: 1, title: 'GRAND OFFER: 50 Combo Purchases = 1 Free Cycle!', description: 'Exclusive installer & dealer reward program! Purchase 50 GS Vision Camera Combos and receive a high-performance bicycle completely FREE.', discount_percentage: 25.00, coupon_code: 'FREECYCLE50', is_active: 1, image_url: '/assets/products/gs-vision-dome-bullet-collection.png' },
+    { id: 1, title: 'GRAND OFFER: 50 Combo Purchases = 1 Free Cycle!', description: 'Exclusive installer & dealer reward program! Purchase 50 GS Vision Camera Combos and receive a high-performance bicycle completely FREE. Buy Now & Get Your Free Cycle!', discount_percentage: 25.00, coupon_code: 'FREECYCLE50', is_active: 1, image_url: '/assets/products/gs-vision-security-camera-collection-dome-bullet-offer.png' },
     { id: 2, title: '4-Camera Complete Setup: ₹15,999 (Was ₹19,999) + FREE 4G Router', description: 'Special promotional package for homes and shops across Maharashtra. Includes 4 cameras, DVR, recording HDD, power supply, and a FREE 4G Router!', discount_percentage: 20.00, coupon_code: 'ROUTERFREE', is_active: 1, image_url: '/assets/banners/cctv-setup-offer.png' }
   ],
   enquiries: [],
