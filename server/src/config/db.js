@@ -201,6 +201,63 @@ const memoryDB = {
       description: 'All-in-one surveillance setup for homes and businesses across Maharashtra. Includes 4 Full HD cameras, DVR recorder, surveillance storage, SMPS power supply, connectors, cables, and a FREE 4G Router. Special Price ₹15,999 (Regular ₹19,999).',
       main_image: '/assets/banners/cctv-setup-offer.png', price: 15999.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
       status: 'active', brochure: null, created_at: new Date()
+    },
+
+    // ── 5 New GS Vision 3MP Camera Models ──
+    {
+      id: 22, category_id: 2, brand_id: 1,
+      name: 'GS Vision 3MP HD Bullet Camera (8MM Lens, Full HD Colour, Night Vision)',
+      slug: 'gs-vision-3mp-hd-bullet-camera-8mm-colour-night-vision',
+      model_number: 'GS-B3MP-8MM-V2',
+      short_description: 'Triple-angle 3MP HD Bullet Camera with 8MM lens, 1080P Full HD Colour Vision, In-Built Mic & Night Vision.',
+      description: 'GS Vision 3MP Resolution HD Bullet Camera — Smart Vision.. Smart Security. Features: 1080P Full HD Colour Vision, Long-Range 8MM Optical Lens, In-Built Microphone, Powerful Night Vision, and All DVR Supported compatibility.',
+      main_image: '/assets/products/gs-vision-3mp-bullet-camera-8mm.png',
+      price: 1499.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 23, category_id: 2, brand_id: 1,
+      name: 'GS Vision 3MP HD Fisheye Bullet Camera (3.6MM Lens, Colour Vision)',
+      slug: 'gs-vision-3mp-hd-fisheye-bullet-camera-3-6mm',
+      model_number: 'GS-FB3MP-3.6MM',
+      short_description: 'Wide-angle Fisheye Bullet 3MP Camera with 3.6MM lens, 1080P Full HD Colour Vision, In-Built Mic & Night Vision.',
+      description: 'GS Vision 3MP Resolution HD Fisheye Bullet Camera — Smart Vision.. Smart Security. Covers wide angle with Fisheye optics. Features: 1080P Full HD Colour Vision, 3.6MM Wide-Angle Fisheye Lens, In-Built Microphone, Powerful Night Vision, and All DVR Supported.',
+      main_image: '/assets/products/gs-vision-3mp-fisheye-bullet-camera.png',
+      price: 1399.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 24, category_id: 2, brand_id: 1,
+      name: 'GS Vision 3MP HD Dome Fisheye Camera (3.6MM Lens, Colour Vision)',
+      slug: 'gs-vision-3mp-hd-dome-fisheye-camera-3-6mm',
+      model_number: 'GS-DF3MP-3.6MM',
+      short_description: 'Dome Fisheye 3MP Camera with 3.6MM lens, 1080P Full HD Colour Vision, In-Built Mic & Night Vision.',
+      description: 'GS Vision 3MP Resolution HD Dome Fisheye Camera — Smart Vision.. Smart Security. Wide-angle dome design for ceiling & corner mounting. Features: 1080P Full HD Colour Vision, 3.6MM Fisheye Lens, In-Built Microphone, IR Night Vision, and All DVR Supported.',
+      main_image: '/assets/products/gs-vision-3mp-dome-fisheye-camera.png',
+      price: 1350.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 25, category_id: 2, brand_id: 1,
+      name: 'GS Vision 3MP HD Dome Camera (3.6MM Lens, Colour Night Vision)',
+      slug: 'gs-vision-3mp-hd-dome-camera-3-6mm-colour-night-vision',
+      model_number: 'GS-D3MP-3.6MM',
+      short_description: 'Classic Dome 3MP HD Camera with 3.6MM lens, 1080P Full HD Colour Vision, In-Built Mic & Night Vision.',
+      description: 'GS Vision 3MP Resolution HD Dome Camera — Smart Vision.. Smart Security. Best-seller dome for indoor & outdoor use. Features: 1080P Full HD Colour Vision, 3.6MM Optical Lens, In-Built Microphone, High-Power Night Vision LEDs, and All DVR Supported.',
+      main_image: '/assets/products/gs-vision-3mp-dome-camera.png',
+      price: 1299.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 26, category_id: 2, brand_id: 1,
+      name: 'GS Vision 3MP HD 360° Dome Camera (3.6MM Lens, Pan-Tilt, Colour Vision)',
+      slug: 'gs-vision-3mp-hd-360-dome-camera-pan-tilt',
+      model_number: 'GS-PTZ3MP-360',
+      short_description: '360° Pan-Tilt 3MP Dome Camera with 3.6MM lens, 1080P Full HD Colour Vision, In-Built Mic & Night Vision.',
+      description: 'GS Vision 3MP Resolution HD 360° Dome Camera — Smart Vision.. Smart Security. Full 360-degree pan coverage for total room visibility. Features: 1080P Full HD Colour Vision, 3.6MM Wide-Angle Lens, 360° Rotation, In-Built Microphone, IR Night Vision, and All DVR Supported.',
+      main_image: '/assets/products/gs-vision-3mp-360-dome-camera.png',
+      price: 1599.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
     }
   ],
   product_specifications: [
@@ -214,14 +271,45 @@ const memoryDB = {
     { id: 8, product_id: 18, specification_name: 'Lens Screen', specification_value: 'One Camera 3 Lens Screen View', sort_order: 2 },
     { id: 9, product_id: 18, specification_name: 'Connectivity', specification_value: '4G LTE SIM Card + Solar Powered', sort_order: 3 },
     { id: 10, product_id: 19, specification_name: 'Speed', specification_value: '10/100/1000M Gigabit GIGA', sort_order: 1 },
-    { id: 11, product_id: 20, specification_name: 'Channels', specification_value: '4 Channel & 8 Channel Options', sort_order: 1 }
+    { id: 11, product_id: 20, specification_name: 'Channels', specification_value: '4 Channel & 8 Channel Options', sort_order: 1 },
+    // Specs for 5 new 3MP cameras
+    { id: 12, product_id: 22, specification_name: 'Resolution', specification_value: '3MP (1080P Full HD Colour Vision)', sort_order: 1 },
+    { id: 13, product_id: 22, specification_name: 'Lens', specification_value: '8 MM Long-Range Optical Lens', sort_order: 2 },
+    { id: 14, product_id: 22, specification_name: 'Audio', specification_value: 'In-Built Microphone', sort_order: 3 },
+    { id: 15, product_id: 22, specification_name: 'Night Vision', specification_value: 'High-Power Night Vision', sort_order: 4 },
+    { id: 16, product_id: 22, specification_name: 'DVR Support', specification_value: 'All DVR Supported', sort_order: 5 },
+    { id: 17, product_id: 23, specification_name: 'Resolution', specification_value: '3MP (1080P Full HD Colour Vision)', sort_order: 1 },
+    { id: 18, product_id: 23, specification_name: 'Lens', specification_value: '3.6 MM Wide-Angle Fisheye Lens', sort_order: 2 },
+    { id: 19, product_id: 23, specification_name: 'Audio', specification_value: 'In-Built Microphone', sort_order: 3 },
+    { id: 20, product_id: 23, specification_name: 'Night Vision', specification_value: 'Night Vision', sort_order: 4 },
+    { id: 21, product_id: 23, specification_name: 'DVR Support', specification_value: 'All DVR Supported', sort_order: 5 },
+    { id: 22, product_id: 24, specification_name: 'Resolution', specification_value: '3MP (1080P Full HD Colour Vision)', sort_order: 1 },
+    { id: 23, product_id: 24, specification_name: 'Lens', specification_value: '3.6 MM Fisheye Dome Lens', sort_order: 2 },
+    { id: 24, product_id: 24, specification_name: 'Audio', specification_value: 'In-Built Microphone', sort_order: 3 },
+    { id: 25, product_id: 24, specification_name: 'Night Vision', specification_value: 'IR Night Vision', sort_order: 4 },
+    { id: 26, product_id: 24, specification_name: 'DVR Support', specification_value: 'All DVR Supported', sort_order: 5 },
+    { id: 27, product_id: 25, specification_name: 'Resolution', specification_value: '3MP (1080P Full HD Colour Vision)', sort_order: 1 },
+    { id: 28, product_id: 25, specification_name: 'Lens', specification_value: '3.6 MM Optical Lens', sort_order: 2 },
+    { id: 29, product_id: 25, specification_name: 'Audio', specification_value: 'In-Built Microphone', sort_order: 3 },
+    { id: 30, product_id: 25, specification_name: 'Night Vision', specification_value: 'High-Power Night Vision LEDs', sort_order: 4 },
+    { id: 31, product_id: 25, specification_name: 'DVR Support', specification_value: 'All DVR Supported', sort_order: 5 },
+    { id: 32, product_id: 26, specification_name: 'Resolution', specification_value: '3MP (1080P Full HD Colour Vision)', sort_order: 1 },
+    { id: 33, product_id: 26, specification_name: 'Lens', specification_value: '3.6 MM Wide-Angle Lens', sort_order: 2 },
+    { id: 34, product_id: 26, specification_name: 'Rotation', specification_value: '360° Pan-Tilt Coverage', sort_order: 3 },
+    { id: 35, product_id: 26, specification_name: 'Audio', specification_value: 'In-Built Microphone', sort_order: 4 },
+    { id: 36, product_id: 26, specification_name: 'Night Vision', specification_value: 'IR Night Vision', sort_order: 5 },
+    { id: 37, product_id: 26, specification_name: 'DVR Support', specification_value: 'All DVR Supported', sort_order: 6 }
   ],
   product_images: [],
   banners: [
     { id: 1, title: 'GS Vision CCTV & Smart Security Collection', subtitle: 'Commercial CCTV Project Specialists • Installation & Support Across Maharashtra • Mo. 8308209470', button_text: 'View Camera Collection', button_link: '/products', display_order: 1, is_active: 1, image_url: '/assets/products/gs-vision-dome-bullet-collection.png' },
-    { id: 2, title: 'Active Pixel G24 4G 10X Zoom Solar PTZ Camera', subtitle: 'One Camera 3-Lens Screen View • 10X Zoom • Wire-Free Solar Powered Security Anywhere', button_text: 'Explore Solar Camera', button_link: '/products/active-pixel-g24-4g-10x-zoom-solar-ptz-camera', display_order: 2, is_active: 1, image_url: '/assets/products/active-pixel-g24-solar-ptz.jpg' },
-    { id: 3, title: 'GS Vision 3MP HD Bullet Camera (8MM Long-Range Lens)', subtitle: 'Full HD Colour Vision • In-Built Mic • High-Power Night Vision • All DVR Supported', button_text: 'View 3MP Camera', button_link: '/products/gs-vision-3mp-resolution-hd-bullet-camera-8mm', display_order: 3, is_active: 1, image_url: '/assets/products/gs-vision-3mp-8mm-bullet-camera.png' },
-    { id: 4, title: 'Soltrix Gladiator Metal SMPS & Gigabit Media Converters', subtitle: 'Heavy Duty Metal Casing • BIS Certified • Made in Bharat', button_text: 'Explore Power & Networking', button_link: '/products', display_order: 4, is_active: 1, image_url: '/assets/products/soltrix-gladiator-metal-smps.png' }
+    { id: 2, title: 'GS Vision 3MP HD Bullet Camera — 8MM Long-Range Lens', subtitle: '1080P Full HD Colour Vision • In-Built Mic • High-Power Night Vision • All DVR Supported', button_text: 'View Bullet Camera', button_link: '/products/gs-vision-3mp-hd-bullet-camera-8mm-colour-night-vision', display_order: 2, is_active: 1, image_url: '/assets/products/gs-vision-3mp-bullet-camera-8mm.png' },
+    { id: 3, title: 'GS Vision 3MP Fisheye Bullet Camera — Wide-Angle Coverage', subtitle: '1080P Full HD Colour Vision • 3.6MM Fisheye Lens • In-Built Mic • Night Vision', button_text: 'View Fisheye Bullet', button_link: '/products/gs-vision-3mp-hd-fisheye-bullet-camera-3-6mm', display_order: 3, is_active: 1, image_url: '/assets/products/gs-vision-3mp-fisheye-bullet-camera.png' },
+    { id: 4, title: 'GS Vision 3MP Dome Fisheye Camera — Ceiling & Corner Mount', subtitle: '1080P Full HD Colour Vision • 3.6MM Fisheye Dome Lens • IR Night Vision • All DVR Supported', button_text: 'View Dome Fisheye', button_link: '/products/gs-vision-3mp-hd-dome-fisheye-camera-3-6mm', display_order: 4, is_active: 1, image_url: '/assets/products/gs-vision-3mp-dome-fisheye-camera.png' },
+    { id: 5, title: 'GS Vision 3MP HD Dome Camera — Best-Seller Indoor & Outdoor', subtitle: '1080P Full HD Colour Vision • 3.6MM Optical Lens • In-Built Mic • High-Power Night Vision', button_text: 'View Dome Camera', button_link: '/products/gs-vision-3mp-hd-dome-camera-3-6mm-colour-night-vision', display_order: 5, is_active: 1, image_url: '/assets/products/gs-vision-3mp-dome-camera.png' },
+    { id: 6, title: 'GS Vision 3MP HD 360° Dome Camera — Full Pan-Tilt Coverage', subtitle: '1080P Full HD Colour Vision • 360° Rotation • 3.6MM Lens • IR Night Vision • All DVR Supported', button_text: 'View 360° Dome', button_link: '/products/gs-vision-3mp-hd-360-dome-camera-pan-tilt', display_order: 6, is_active: 1, image_url: '/assets/products/gs-vision-3mp-360-dome-camera.png' },
+    { id: 7, title: 'Active Pixel G24 4G 10X Zoom Solar PTZ Camera', subtitle: 'One Camera 3-Lens Screen View • 10X Zoom • Wire-Free Solar Powered Security Anywhere', button_text: 'Explore Solar Camera', button_link: '/products/active-pixel-g24-4g-10x-zoom-solar-ptz-camera', display_order: 7, is_active: 1, image_url: '/assets/products/active-pixel-g24-solar-ptz.jpg' },
+    { id: 8, title: 'Soltrix Gladiator Metal SMPS & Gigabit Media Converters', subtitle: 'Heavy Duty Metal Casing • BIS Certified • Made in Bharat', button_text: 'Explore Power & Networking', button_link: '/products', display_order: 8, is_active: 1, image_url: '/assets/products/soltrix-gladiator-metal-smps.png' }
   ],
   offers: [
     { id: 1, title: 'GRAND OFFER: 50 Combo Purchases = 1 Free Cycle!', description: 'Exclusive installer & dealer reward program! Purchase 50 GS Vision Camera Combos and receive a high-performance bicycle completely FREE.', discount_percentage: 25.00, coupon_code: 'FREECYCLE50', is_active: 1, image_url: '/assets/products/gs-vision-dome-bullet-collection.png' },
