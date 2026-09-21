@@ -258,6 +258,63 @@ const memoryDB = {
       main_image: '/assets/products/gs-vision-3mp-360-dome-camera.png',
       price: 1599.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
       status: 'active', brochure: null, created_at: new Date()
+    },
+
+    // ── 5 New GS Vision Products (Batch 2) ──
+    {
+      id: 27, category_id: 2, brand_id: 1,
+      name: 'GS Vision 3MP Resolution HD Bullet Camera (3.6MM Lens, Colour Vision)',
+      slug: 'gs-vision-3mp-hd-bullet-camera-3-6mm-colour',
+      model_number: 'GS-B3MP-3.6MM',
+      short_description: '3MP HD Bullet Camera with 3.6MM Lens, 1080P Full HD Colour Vision, In-Built Mic & Night Vision. All DVR Supported.',
+      description: 'GS Vision 3MP Resolution HD Bullet Camera — Smart Vision.. Smart Security. Compact and powerful bullet design. Features: 1080P Full HD Colour Vision, 3.6MM Optical Lens, In-Built Microphone, Night Vision, and All DVR Supported.',
+      main_image: '/assets/products/gs-vision-3mp-bullet-camera-3-6mm.png',
+      price: 1299.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 28, category_id: 4, brand_id: 1,
+      name: 'GS Vision High Performance 4-Port SMPS Power Supply',
+      slug: 'gs-vision-high-performance-4-port-smps-power-supply',
+      model_number: 'GS-SMPS-4P-HP',
+      short_description: 'GS Vision 4-Port SMPS — High Performance Power Supply with High Efficiency and Superior Quality.',
+      description: 'GS Vision High Performance Power Supply — 4 Port SMPS. Built for 24x7 CCTV reliability. Features high-efficiency design, superior quality components, compact form factor, and universal AC input. Ideal for 4-camera setups and small commercial installations.',
+      main_image: '/assets/products/gs-vision-4port-smps-power-supply.png',
+      price: 550.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 29, category_id: 7, brand_id: 1,
+      name: 'GS Vision Outdoor CAT 6 Cable — 305 Meter Roll',
+      slug: 'gs-vision-outdoor-cat6-cable-305-meter',
+      model_number: 'GS-CAT6-305M-OUT',
+      short_description: 'GS Vision 305-Meter Outdoor CAT 6 Cable reel for IP camera LAN networking in all weather conditions.',
+      description: 'GS Vision Outdoor CAT 6 Cable — 305 Meter Roll. UV-resistant, weatherproof outer jacket with heavy-gauge copper conductors. Supports Gigabit PoE networking for IP cameras and NVRs. Suitable for underground, conduit, or external wall runs across industrial and commercial sites.',
+      main_image: '/assets/products/gs-vision-outdoor-cat6-cable-305m.png',
+      price: 2800.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 30, category_id: 9, brand_id: 1,
+      name: 'GS Vision Smart PoE Switch 4+2 (10/100 Mbps)',
+      slug: 'gs-vision-smart-poe-switch-4-plus-2-10-100mbps',
+      model_number: 'GS-POE-SW4P2U',
+      short_description: 'GS Vision Smart PoE Switch 4+2 — 4 PoE Ports + 2 Uplink Ports, 10/100 Mbps for IP Camera Networks.',
+      description: 'GS Vision Smart PoE Switch 4+2 — Power and data over a single Cat6 cable for up to 4 IP cameras simultaneously. 4 × PoE output ports (10/100 Mbps) + 2 × Gigabit uplink ports. Compact plug-and-play design with LED port status indicators. Ideal for small home and shop IP camera setups.',
+      main_image: '/assets/products/gs-vision-smart-poe-switch-4plus2.png',
+      price: 950.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
+    },
+    {
+      id: 31, category_id: 9, brand_id: 1,
+      name: 'GS Vision Smart PoE Switch 8+2 (10/100 Mbps)',
+      slug: 'gs-vision-smart-poe-switch-8-plus-2-10-100mbps',
+      model_number: 'GS-POE-SW8P2U',
+      short_description: 'GS Vision Smart PoE Switch 8+2 — 8 PoE Ports + 2 Uplink Ports, 10/100 Mbps for large IP camera installations.',
+      description: 'GS Vision Smart PoE Switch 8+2 — Power and connect up to 8 IP cameras over a single Cat6 cable network. 8 × PoE output ports (10/100 Mbps) + 2 × Gigabit uplink ports. Rack-mountable design with LED indicators. Perfect for commercial, office, and factory CCTV deployments with NVR-based recording.',
+      main_image: '/assets/products/gs-vision-smart-poe-switch-8plus2.png',
+      price: 1650.00, show_price: 1, featured: 1, is_new: 1, stock_status: 'in_stock',
+      status: 'active', brochure: null, created_at: new Date()
     }
   ],
   product_specifications: [
